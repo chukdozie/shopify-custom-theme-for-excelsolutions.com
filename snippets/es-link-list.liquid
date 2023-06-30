@@ -133,12 +133,34 @@ ul.es-submenu li a:first-child:nth-last-child(2):before {
     <div class="es-navs">
       <ul role="list">
         {%- for link in linklists.main-menu.links -%}
-          <li>
+          <li class="{{ link.handle}}">
             <a href="{{ link.url }}" {% if link.active %}aria-current="page"{% endif %} class="header__menu-item list-menu__item link focus-inset">
               {{ link.title | upcase }}
             </a>
     
             {%- if link.links != blank -%}
+              {% if section.settings.enable_megamenu == true %} 
+              <ul class="header__submenu mega-menu list-menu es-submenu caption-large motion-reduce" role="list" tabindex="-1">
+                {%- for child_link in link.links -%}
+                  <li>
+                    <a href="{{ child_link.url }}" {% if child_link.active %}aria-current="page"{% endif %} class="header__menu-item list-menu__item link link--text focus-inset caption-large">
+                      {{ child_link.title }}
+                    </a>
+    
+                    {%- if child_link.links != blank -%}
+                      <div class="es-subsub">
+                        {%- for grandchild_link in child_link.links -%}
+                          <a href="{{ grandchild_link.url }}" {% if grandchild_link.active %}aria-current="page"{% endif %} class="header__menu-item list-menu__item link link--text focus-inset">
+                            {{ grandchild_link.title }}
+                          </a>
+                        {%- endfor -%}
+                      </div>
+                    {%- endif -%}
+    
+                  </li>
+                {%- endfor -%}
+              </ul>              
+              {% else %}
               <ul class="header__submenu list-menu es-submenu caption-large motion-reduce" role="list" tabindex="-1">
                 {%- for child_link in link.links -%}
                   <li>
@@ -161,6 +183,7 @@ ul.es-submenu li a:first-child:nth-last-child(2):before {
                   </li>
                 {%- endfor -%}
               </ul>
+              {% endif %}
             {%- endif -%}
     
           </li>
@@ -170,3 +193,40 @@ ul.es-submenu li a:first-child:nth-last-child(2):before {
     {% render 'es-link-search' %}
   </div>
 </nav>
+
+<style>
+div.es-navs ul li:hover ul.mega-menu{
+  display: flex;
+  width: 100%;
+  position: fixed;
+  left: 0;
+}
+
+div.es-navs ul li:hover ul.mega-menu li{
+  width: 25%;
+}
+
+ul.es-submenu.mega-menu li a:first-child:nth-last-child(2):before{
+  display: none;
+}
+
+ul.mega-menu li a:before{
+    content: '';
+    position: absolute;
+    right: 50px;
+    top: 18px;
+    margin: -4px 0 0;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    border-left: 5px solid #ccc;
+}
+
+ul.es-submenu.mega-menu div.es-subsub a{
+  font-weight:400;
+}
+
+a.header__menu-item.list-menu__item.link.link--text.focus-inset.caption-large{
+  padding-bottom: 10px;
+  font-size: 16px;
+}
+</style>
