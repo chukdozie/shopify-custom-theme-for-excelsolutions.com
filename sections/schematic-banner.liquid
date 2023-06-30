@@ -1,0 +1,75 @@
+{{ 'component-schematic-hero.aio.min.css' | asset_url | stylesheet_tag }}
+
+<div
+  class="schematic-hero schematic-hero--with-background-image {% if section.settings.show_border_overlay %} schematic-hero-border-overlay {% endif %}"
+>
+  <div class="schematic-hero__inner page-width">
+    <div class="hero-breadcrumbs">
+      {% render 'breadcrumb' %}
+    </div>
+    <div class="schematic-hero__text-wrapper text-{{ section.settings.text_alignment }}">
+      <h1 class="schematic-hero__title">
+        {{- collection.title | escape -}}
+      </h1>
+    </div>
+  </div>
+</div>
+
+  <div id="schematic-img-wrap">
+    <img loading="lazy"
+          src="{{ collection.featured_image | image_url }}"
+          width="75%"
+          height="auto"
+          alt="{{ collection.featured_image.alt | escape }}"
+    >
+  </div>
+
+{% if section.settings.show_collection_description %}
+  <div class="collection-description">{{ collection.description }}</div>
+{% endif %}
+
+<style>
+  @media (max-width: 767px) {
+    .schematic-hero--with-background-image {
+      margin-bottom: 2rem;
+    }
+  }
+</style>
+
+
+{% schema %}
+{
+  "name": "t:sections.main-collection-banner.name",
+  "class": "spaced-section spaced-section--full-width schematic",
+  "settings": [
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "options": [
+        {
+          "value": "center",
+          "label": "t:sections.collection-banner-with-background.settings.text-alignment-center"
+        },
+        {
+          "value": "left",
+          "label": "t:sections.collection-banner-with-background.settings.text-alignment-left"
+        }
+      ],
+      "default": "center",
+      "label": "t:sections.collection-banner-with-background.settings.text-alignment-center"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_collection_description",
+      "default": false,
+      "label": "t:sections.collection-banner-with-background.settings.show-collection-description"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_border_overlay",
+      "default": false,
+      "label": "t:sections.collection-banner-with-background.settings.show-border-overlay"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,101 @@
+{{ 'slider-splide.aio.min.css' | asset_url | stylesheet_tag }}
+<style>
+  .splide__slide img {
+    max-width: 100%;
+  }
+  @media screen and (max-width: 999px) {
+    ul.splide__list, .splide__slide img {
+      height: fit-content;
+    }
+  }
+</style>
+<div class="splide" id="image-slider">
+	<div class="splide__track">
+		<ul class="splide__list">
+      {%- for block in section.blocks -%}
+			<li class="splide__slide">
+        <a href="{{ block.settings.image_link }}">
+          {%- if block.settings.image != blank -%}
+            <img loading="lazy" srcset="{{ block.settings.image | img_url: 'master' }}
+            {%- if block.settings.image.width >= 330 -%}{{ block.settings.image | img_url: '330x' }} 330w,{%- endif -%}
+            {%- if block.settings.image.width >= 535 -%}{{ block.settings.image | img_url: '535x' }} 535w,{%- endif -%}
+            {%- if block.settings.image.width >= 720 -%}{{ block.settings.image | img_url: '720x' }} 720w,{%- endif -%}
+            {%- if block.settings.image.width >= 940 -%}{{ block.settings.image | img_url: '940x' }} 940w,{%- endif -%}
+            {%- if block.settings.image.width >= 1440 -%}{{ block.settings.image | img_url: '1440x' }} 1440w,{%- endif -%}
+            {%- if block.settings.image.width >= 1880 -%}{{ block.settings.image | img_url: '1880x' }} 1880w{%- endif -%}"
+            src="{{ block.settings.image | img_url: 'master' }}"
+            sizes="(max-width: 1087px) 480px, 800px"
+            alt="test alt"
+            height="{{ block.settings.image.height }}"
+            width="{{ block.settings.image.width }}"
+            class="motion-reduce">
+          {%- endif -%}
+        </a>
+      </li>
+      {%- endfor -%}
+		</ul>
+	</div>
+</div>
+
+{% javascript %}
+  document.addEventListener( 'DOMContentLoaded', function () {
+    new Splide('#image-slider').mount();
+  } );
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Image slider",
+  "tag": "section",
+  "class": "spaced-section spaced-section--full-width",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Slider full width",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "adapt_height_first_image",
+      "default": false,
+      "label": "Adapt section height to first image size"
+    },
+    {
+      "type": "checkbox",
+      "id": "swipe_on_mobile",
+      "default": false,
+      "label": "Enable swipe on mobile"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image Slide",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image Slide"
+        },
+        {
+          "type": "url",
+          "id": "image_link",
+          "label": "Image link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image slider",
+      "blocks": [
+        {
+          "type": "image"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

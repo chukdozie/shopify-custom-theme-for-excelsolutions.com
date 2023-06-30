@@ -1,0 +1,59 @@
+<style>
+.product-bg {
+  background-color: {{ section.settings.bg_color }}
+}
+
+section.product.product-bg {
+  padding: 3rem 2rem;
+}
+ 
+p.product-sku {
+  margin: 0;
+  padding: 0;
+  font-size: 2rem;
+}
+
+h1#product-h1 {
+  margin: 0;
+  font-weight: bold;
+  letter-spacing: -.06em;
+  word-wrap: break-word;
+  text-align: left !important;
+}
+
+h1#product-h1:after {
+  display: none;
+}
+
+@media screen and (min-width: 1000px) {
+  section.product.product-bg {
+    padding: 6rem 4rem 4rem;
+    min-height: 150px !important;
+  }
+}
+</style>
+
+  <div class="product-header">
+    {% assign current_variant = product.selected_or_first_available_variant %}
+    {% assign product_title = product.title %}
+    <h1 id="product-h1">{{ product_title | escape }}</h1>
+  </div>
+
+</article>
+
+
+{% schema %}
+{
+  "name": "Product Header",
+  "tag": "section",
+  "class": "product product-bg",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#ffba00"
+    }  
+  ]
+}
+{% endschema %}

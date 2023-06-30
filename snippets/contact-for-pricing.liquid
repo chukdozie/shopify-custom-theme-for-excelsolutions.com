@@ -1,0 +1,60 @@
+<style>
+  button#pricing-call {
+    display: inline-flex;
+    width: 100%;
+    justify-content: center;
+    padding: 1rem 0;
+    align-items: center;
+    border: 1px solid black;
+  }
+  div#pricing-call {
+    text-decoration: none;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #637895;
+    cursor: pointer;
+    margin: 0;
+  }
+  .product__info-container div#pricing-call {
+    float: left;
+    width: 62%;
+  }
+  #main-collection-product-table div#pricing-call {
+    width: 100% !important;
+  }
+  button.call-btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+    padding: 0.9rem;
+    color: #637895;
+    font-weight: bold;
+    font-size: 1.75rem;
+    border: 2px solid #d9d9d9;
+    border-radius: 3px !important;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  button.call-btn:focus {
+    border: 2px solid #d9d9d9 !important;
+    border-radius: 3px !important;
+  }
+  div#pricing-call svg {
+    height: 16px;
+    margin-top: 0.3rem;
+  }
+</style>
+
+<div onclick="window.location = 'tel:18559514499'; return false;" id="pricing-call">
+  <button class="call-btn">
+    <div>
+      Call for Price
+    </div>
+    <div>
+      {% render 'icon-phone' %}
+    </div>
+  </button>
+</div>

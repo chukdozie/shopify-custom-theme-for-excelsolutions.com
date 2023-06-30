@@ -1,0 +1,149 @@
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+<li class="product-list-item">
+  <div class="product-list-item-image">
+    <a href="{{ product.url | default: '#' }}" class="full-unstyled-link">
+      {%- if product.featured_media -%}
+        {%- liquid
+          assign featured_media_aspect_ratio = product.featured_media.aspect_ratio
+    
+          if product.featured_media.aspect_ratio == nil
+            assign featured_media_aspect_ratio = 1
+          endif
+        -%}
+    
+        <div class="card__media-full-spacer">
+          <div class="media media--transparent media--hover-effect"
+            {% if product.featured_media %} style="padding-bottom: 100%;"{% endif %}
+          >
+            <img srcset="{%- if product.featured_media.width >= 165 -%}{{ product.featured_media | img_url: '165x' }} 165w,{%- endif -%}
+              {%- if product.featured_media.width >= 360 -%}{{ product.featured_media | img_url: '360x' }} 360w,{%- endif -%}
+              {%- if product.featured_media.width >= 533 -%}{{ product.featured_media | img_url: '533x' }} 533w,{%- endif -%}
+              {%- if product.featured_media.width >= 720 -%}{{ product.featured_media | img_url: '720x' }} 720w,{%- endif -%}
+              {%- if product.featured_media.width >= 940 -%}{{ product.featured_media | img_url: '940x' }} 940w,{%- endif -%}
+              {%- if product.featured_media.width >= 1066 -%}{{ product.featured_media | img_url: '1066x' }} 1066w{%- endif -%}"
+              src="{{ product.featured_media | img_url: '533x' }}"
+              sizes="(min-width: 1100px) 535px, (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2)"
+              alt="{{ product.featured_media.alt | escape }}"
+              loading="lazy"
+              class="motion-reduce"
+              width="{{ product.featured_media.width }}"
+              height="{{ product.featured_media.height }}"
+            >
+    
+            {%- if product.media[1] != nil -%}
+              <img srcset="{%- if product.media[1].width >= 165 -%}{{ product.media[1] | img_url: '165x' }} 165w,{%- endif -%}
+                {%- if product.media[1].width >= 360 -%}{{ product.media[1] | img_url: '360x' }} 360w,{%- endif -%}
+                {%- if product.media[1].width >= 533 -%}{{ product.media[1] | img_url: '533x' }} 533w,{%- endif -%}
+                {%- if product.media[1].width >= 720 -%}{{ product.media[1] | img_url: '720x' }} 720w,{%- endif -%}
+                {%- if product.media[1].width >= 940 -%}{{ product.media[1] | img_url: '940x' }} 940w,{%- endif -%}
+                {%- if product.media[1].width >= 1066 -%}{{ product.media[1] | img_url: '1066x' }} 1066w{%- endif -%}"
+                src="{{ product.media[1] | img_url: '533x' }}"
+                sizes="(min-width: 1100px) 535px, (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2)"
+                alt="{{ product.media[1].alt | escape }}"
+                loading="lazy"
+                class="motion-reduce"
+              width="{{ product.media[1].width }}"
+              height="{{ product.media[1].height }}"
+              >
+            {%- endif -%}
+          </div>
+        </div>
+      {%- else -%}
+        <img loading="lazy" src="https://via.placeholder.com/200.png?text" alt="image not found" />
+      {%- endif -%}
+    </a>
+  </div>
+  <div class="product-list-item-details">
+    <div id="estb-mobile-width">
+      <div class="product-list-item-details__title"><a href="{{ product.url | default: '#' }}" class="full-unstyled-link"><span>{{ product.title }}</span></a></div>
+      <div class="product-list-item-details__sku">Item {{ current_variant.sku }}</div>
+      <div class="product-list-item-details__vendor">Fits <a href="/collections/{{ product.vendor | handleize }}" class="vendor">{{ product.vendor }}</a></div>
+      <div class="product-list-item-details__price">
+        {% if product.price != 0 %}
+          {%- render 'price', product: product, use_variant: true, show_badges: true, price_class: 'price--large' -%}
+        {% endif %}
+      </div>
+    </div>
+    <!--  add to cart -->
+    <div class="product-list-item-cart-form">
+      {% if product.price == 0 %}
+        {%- render 'contact-for-pricing' -%}
+      {% else %}
+        <div>
+          <product-form class="product-form">
+            {%- assign product_form_id = 'product-form-' | append: product.id -%}
+            {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+              <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+              <div class="product-form__input product-form__quantity">
+                <quantity-input class="quantity">
+                  <button class="quantity__button no-js-hidden" name="minus" type="button">
+                    <span class="visually-hidden">{{ 'products.product.quantity.decrease' | t: product: product.title | escape }}</span>
+                    {% render 'icon-minus' %}
+                  </button>
+                  <input class="quantity__input"
+                    type="number"
+                    name="quantity"
+                    id="Quantity-{{ product_form_id }}"
+                    min="1"
+                    value="1"
+                  >
+                  <button class="quantity__button no-js-hidden" name="plus" type="button">
+                    <span class="visually-hidden">{{ 'products.product.quantity.increase' | t: product: product.title | escape }}</span>
+                    {% render 'icon-plus' %}
+                  </button>
+                </quantity-input>
+              </div>
+              <div class="product-form__buttons">
+                <button
+                  type="submit"
+                  name="add"
+                  class="product-form__submit button button--full-width button--primary"
+                {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
+                >
+                    {%- if product.selected_or_first_available_variant.available -%}
+                      {{ 'products.product.add_to_cart' | t }}
+                    {%- else -%}
+                      {{ 'products.product.sold_out' | t }}
+                    {%- endif -%}
+                </button>
+              </div>
+              <div style="width: 100%;">
+                {% for tag in product.tags %}
+                  {% assign backordered = false %}
+                  {% if product.tags contains 'backordered' %}
+                    {% assign backordered = true %}
+                  {% endif %}
+                {% endfor %}
+                {% if backordered %}
+                <div id="es-table-icon" style="display: inline-flex; margin-top: 0.5em; align-items: center; width: 100%; justify-content: center;">
+                  {% render 'icon-box-closed' %}
+                  <p style="font-size: 13px; margin: 0 0.4rem; text-align: center; padding: 0;"><strong>Item on backorder</strong></p>
+                </div>
+                {% endif %}
+              </div>
+            {%- endform -%}
+          </product-form>
+     
+          {%- assign pick_up_availabilities = product.selected_or_first_available_variant.store_availabilities | where: 'pick_up_enabled', true -%}
+    
+          <pickup-availability class="product__pickup-availabilities no-js-hidden"
+            {% if product.selected_or_first_available_variant.available and pick_up_availabilities.size > 0 %} available{% endif %}
+            data-base-url="{{ shop.url }}{{ routes.root_url }}"
+            data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+            data-has-only-default-variant="{{ product.has_only_default_variant }}"
+          >
+            <template>
+              <pickup-availability-preview class="pickup-availability-preview">
+                {% render 'icon-unavailable' %}
+                <div class="pickup-availability-info">
+                  <p class="caption-large">{{ 'products.product.pickup_availability.unavailable' | t }}</p>
+                  <button class="pickup-availability-button link link--text underlined-link">{{ 'products.product.pickup_availability.refresh' | t }}</button>
+                </div>
+              </div>
+            </template>
+          </pickup-availability>
+        </div>
+        {% endif %}
+    </div>
+  </div>
+</li>

@@ -1,0 +1,101 @@
+<style>
+  .collection-search.es-search form {
+    max-width: 600px;
+    height: 45px;
+    padding: 0;
+  }
+  .collection-search .es-search-suggest input {
+    height: 45px;
+    background: #f0f0f0 !important;
+    border: 0.2rem solid rgb(216 216 216) !important;
+  }
+
+   .collection-search .es-search-suggest input#Search:focus-visible {
+       border: 2px solid #fcb900 !important; 
+     
+   }
+
+  .collection-search.es-search form  .es-search-wrapper {
+    padding-right: 0;
+  }
+
+  .collection-search #predictive-search {
+    position: relative;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+  }
+
+  .collection-search ul.predictive-search__results-list {
+    max-width: 598px !important;
+    margin-left: 1px;
+  }
+
+</style>
+
+<predictive-search class="collection-search es-search">
+  <form action="{{ routes.search_url }}" method="get" accept-charset="utf-8" role="search">
+    <div class="es-search-wrapper">
+      <div class="es-search-suggest">
+        <input 
+          type="search" 
+          id="Search" 
+          name="q" 
+          placeholder="Search Product" 
+          value="{{ search.terms | escape }}"
+          role="combobox"
+          aria-expanded="false"
+          aria-owns="predictive-search-results-list"
+          aria-controls="predictive-search-results-list"
+          aria-haspopup="listbox"
+          aria-autocomplete="list"
+          autocorrect="off"
+          autocomplete="off"
+          autocapitalize="off"
+          spellcheck="false"/>
+          <input name="options[prefix]" type="hidden" value="last">
+      </div>
+    </div>
+    <div id="predictive-search" tabindex="-1">
+      {%- if predictive_search.performed -%}
+        <div id="predictive-search-results">
+          <ul id="predictive-search-results-list" class="predictive-search__results-list" role="listbox" aria-labelledby="predictive-search-products">
+            {%- for product in predictive_search.resources.products -%}
+              <li class="predictive-search__list-item" role="option">
+                <a href="{{ product.url }}" class="predictive-search__item" tabindex="-1">
+                  {%- if product.featured_media != blank -%}
+                    <img loading="lazy" class="predictive-search__image"
+                      src="{{ product.featured_media | img_url: '150x' }}"
+                      alt="{{ product.featured_media.alt }}"
+                      width="50"
+                      height="{{ 50 | divided_by: product.featured_media.preview_image.aspect_ratio }}"
+                    >
+                  {%- endif -%}
+                  <div class="predictive-search__item-content">
+                    <span class="predictive-search__item-heading">{{ product.title }}</span>
+                    <br>
+                    <span style="color: gray;">
+                      {% if product.price == 0 %}
+                        Call for Price
+                      {% else %}
+                        {{ product.price | money }}
+                      {% endif %}
+                    </span> 
+                  </div>
+                </a>
+              </li>
+            {%- endfor -%}
+            <li style="margin: 0 auto 0.5rem; text-align: center; color: gray; font-size: 12px; font-weight: 800">Search results limited*</li>
+            <li class="predictive-search__list-item" role="option" style="padding-bottom: 1rem;">
+              <button class="predictive-search__item quote-cta-btn" style="margin: 0 auto; color: white; cursor: pointer;" tabindex="-1">
+                <strong>View all “{{ predictive_search.terms }}”</strong>
+              </button>
+            </li>
+          </ul>
+        </div>
+      {%- endif -%}
+
+    </div>
+  </form>
+</predictive-search>
+

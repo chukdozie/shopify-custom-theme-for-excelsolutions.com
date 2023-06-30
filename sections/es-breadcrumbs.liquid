@@ -1,0 +1,23 @@
+{{ 'component-collection-hero.aio.min.css' | asset_url | stylesheet_tag }}
+
+<div class="collection-hero">
+  <div class="collection-hero__inner page-width">
+    <div class="hero-breadcrumbs">
+      {% render 'breadcrumb' %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "ES Breadcrumbs",
+    "tag": "section",
+    "class": "spaced-section",
+    "presets": [
+      {
+        "name": "ES Breadcrumbs",
+        "category": "Text"
+      }
+    ]
+  }
+{% endschema %}

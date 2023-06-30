@@ -1,0 +1,10 @@
+.blog-articles {
+  display: grid;
+  grid-gap: 4rem;
+}
+
+@media screen and (min-width: 750px) {
+  .blog-articles {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}

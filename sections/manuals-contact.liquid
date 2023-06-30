@@ -1,0 +1,115 @@
+{{ 'section-contact-form.aio.min.css' | asset_url | stylesheet_tag }}
+
+<div class="contact page-width page-width spaced-section pr-more-section">
+  <div class="pr-more-section">
+    <div class="pr-more-container">
+      <span class="pr-info"><i style="color: #1d3961; font-size: 2.4rem; line-height: 1.5;" class="fa-solid fa-circle-info"></i></span>
+      <p>Can't find the document you're looking for? Request it here</p>
+  <h2 class="title">{{ section.settings.heading | escape }}</h2>
+  {%- form 'contact', id: 'ManualsContact' -%}
+    {%- if form.posted_successfully? -%}
+      <div class="form-status form-status-list form__message" tabindex="-1" autofocus>{% render 'icon-success' %} {{ 'templates.contact.form.post_success' | t }}</div>
+    {%- elsif form.errors -%}
+      <div class="form__message">
+        <h2 class="form-status caption-large" role="alert" tabindex="-1" autofocus>{% render 'icon-error' %} {{ 'templates.contact.form.error_heading' | t }}</h2>
+      </div>
+      <ul class="form-status-list caption-large" role="list">
+        <li>
+          <a href="#ManualsContact-email" class="link">
+            {{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}
+          </a>
+        </li>
+      </ul>
+    {%- endif -%}
+    <div class="qq-contact-row">
+        <div class="field-container">
+          <div class="field-container cfc-33">
+            <div class="field">
+                <input required="true" class="field__input" type="text" id="ManualsContact-name" name="contact[name]" placeholder="Contact Name">
+                <label class="field__label" for="ManualsContact-name">Your Name*</label>
+            </div>
+          </div>
+          <div class="field-container cfc-33">
+            <div class="field">
+                <input required="true" class="field__input" type="text" id="ManualsContact-request" name="contact[request]" placeholder="Request">
+                <label class="field__label" for="ManualsContact-request">Request*</label>
+            </div>
+          </div>
+          <div class="field-container cfc-33">
+                <div class="field field--with-error">
+                    <input
+                        autocomplete="email"
+                        type="email"
+                        id="ManualsContact-email"
+                        class="field__input"
+                        name="contact[email]"
+                        spellcheck="false"
+                        autocapitalize="off"
+                        value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+                        aria-required="true"
+                        {% if form.errors contains 'email' %}
+                            aria-invalid="true"
+                            aria-describedby="ManualsContact-email-error"
+                        {% endif %}
+                        placeholder="{{ 'templates.contact.form.email' | t }}"
+                    >
+                    <label class="field__label" for="ManualsContact-email">{{ 'templates.contact.form.email' | t }} <span aria-hidden="true">*</span></label>
+                    {%- if form.errors contains 'email' -%}
+                        <small class="contact__field-error" id="ManualsContact-email-error">
+                            <span class="visually-hidden">{{ 'accessibility.error' | t }}</span>
+                            <span class="form__message">{% render 'icon-error' %}{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}</span>
+                        </small>
+                    {%- endif -%}
+                </div>
+            </div>
+            <div class="field-container cfc-33">
+                <div class="field">
+                    <input required="true" class="field__input" type="text" id="ManualsContact-equipment_make" name="contact[equipment_make]" placeholder="Equipment Make">
+                    <label class="field__label" for="ManualsContact-equipment_make">Equipment Make*</label>
+                </div>
+            </div>
+            <div class="field-container cfc-33">
+                <div class="field">
+                    <input required="true" class="field__input" type="text" id="ManualsContact-equipment_model" name="contact[equipment_model]" placeholder="Equipment Model">
+                    <label class="field__label" for="ManualsContact-equipment_model">Equipment Model*</label>
+                </div>
+            </div>
+            <div class="field-container cfc-33">
+                <div class="field">
+                    <input required="true" class="field__input" type="text" id="ManualsContact-equipment_year" name="contact[equipment_year]" placeholder="Approximate Year">
+                    <label class="field__label" for="ManualsContact-equipment_year">Approximate Year*</label>
+                </div>
+            </div>
+            <div class="field-container cfc-50">
+                <div class="contact__button">
+                    <button type="submit" class="button">
+                        {{ 'templates.contact.form.send' | t }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+  {%- endform -%}
+</div>
+</div>
+
+{% schema %}
+{
+  "name": "Manuals Form",
+  "tag": "section",
+  "class": "spaced-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Manuals Form",
+      "label": "Heading"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Manuals Form"
+    }
+  ]
+}
+{% endschema %}

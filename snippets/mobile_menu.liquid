@@ -1,0 +1,439 @@
+<!--   mobile start -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<style>
+  @media screen and (max-width: 999px) {
+    .topnav {
+      overflow: hidden;
+      background-color: #1a3357;
+      position: relative;
+    }
+
+    .topnav #myLinks {
+      height: auto;
+      max-height: 0px;
+      -webkit-transition: all 150ms ease-in-out;
+      transition: all 150ms ease-in-out;
+      border-bottom: 0px;
+    }
+    .topnav #myLinks.open{
+      max-height: 1000px;
+      -webkit-transition: all 150ms ease-in-out;
+      transition: all 150ms ease-in-out;
+      border-top: 2px solid #fcb900;
+      overflow-y: scroll;
+      padding: 1.5rem 0 1rem;
+      margin: 0.2rem 0 0;
+    }
+
+    .topnav a {
+      color: white;
+      padding: 0 1rem;
+      text-decoration: none;
+      font-size: 17px;
+    }
+
+    a#es-mobile-logo {
+      position: relative;
+      left: 6.7rem;
+      padding: 0;
+    }
+
+    .topnav a.icon {
+      background: transparent;
+      display: block;
+      position: absolute;
+      right: 0;
+      top: 0;
+      font-size: 30px;
+      padding-top: 6px;
+    }
+    .active {
+      background-color: #1a3357;
+      color: white;
+    } 
+    .drop_down {
+      display: flex;
+      flex-direction: row;
+      align-content: center;
+      justify-content: space-between;
+      align-items: center;
+      color: white;
+      padding-right: 35px;
+    }    
+    a.firstb.text_upper.active {
+      color: #fcb900;
+    }
+    .mobile_nav__toggle.active {
+      color: #fcb900;
+      -webkit-transform: rotate(
+        45deg
+      );
+      transform: rotate(
+        45deg
+      );
+      -webkit-transition: all 150ms ease;
+      transition: all 150ms ease;
+    }
+    .mobile_nav__toggle {
+      -webkit-transition: all 150ms ease;
+      transition: all 150ms ease;
+    }
+
+    .mobile_nav__toggle_2.active{
+      color: #fcb900;
+      -webkit-transform: rotate(45deg);
+      transform: rotate(45deg);
+      -webkit-transition: all 150ms ease;
+      transition: all 150ms ease;
+      background: transparent;
+    }
+    .mobile_nav__toggle_2 {
+      -webkit-transition: all 150ms ease;
+      transition: all 150ms ease;
+    }
+    .drop_menu.first_child {
+      position: relative;
+      background: #f0f2f5;
+    }
+    .drop_menu.first_child a {
+      color: #1a3357;
+      font-weight: 600;
+    }
+    .mobile_nav__toggle_2 {
+      color: #1a3357;
+    }
+    .drop_menu.second_child {
+      background-color: white;
+      position: relative;
+    }
+    .header_mobile{
+      padding: 10px 0px 1px 0px;
+    }
+    #myLinks a {
+      padding: 0.9rem 3.6rem !important;
+      font-size: 16px;
+      font-weight: 700;
+      display: block;
+    }
+    .drop_menu.first_child:before {
+      content: '';
+      position: absolute;
+      right: 31px;
+      top: 0;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-top: 8px solid #1d3961;
+    }
+    .text_upper{
+      text-transform: uppercase;
+    }
+    #myLinks .second_child a {
+      padding: 0.5rem 6rem 0.8rem !important;
+    }
+    .drop_menu.second_child .second_child:before {
+      content: '';
+      position: absolute;
+      left: 38px;
+      width: 5px;
+      height: 1px;
+      background: #1d3961;
+      margin-top: 12px;
+    }
+    .drop_down.active a{
+      color:#fcb900;
+    }
+  }
+  @media only screen and (max-width: 999px){
+    #icon_menu {
+      left: 2rem;
+      top: 3.4rem;
+      padding: 0;
+      width: 26px;
+    }
+    #icon_menu span {
+      position: absolute;
+      margin: -2px 0 0;
+      background: #1d3961;
+      height: 3px;
+      padding: 0;
+      border: none;
+      width: 26px;
+      transition: .3s;
+      outline: 0!important;
+      border-radius: 2px;
+    }
+    #icon_menu span:after,
+    #icon_menu span:before {
+      position: absolute;
+      left: 0;
+      width: 26px;
+      height: 3px;
+      background: #1d3961;
+      transition: .3s;
+      border-radius: 2px;
+      content: '';
+    }
+    #icon_menu span:before {
+      top: -8px;
+      -webkit-transform-origin: 1.5px center;
+      transform-origin: 1.5px center;
+    }
+    #icon_menu span,
+    #icon_menu span:before,
+    #icon_menu span:after {
+      background: #ffffff !important;
+    }
+    #icon_menu span:after {
+      bottom: -8px;
+      -webkit-transform-origin: 1.5px center;
+      transform-origin: 1.5px center;
+    }
+    #icon_menu.open span:before {
+      top: 0;
+      -webkit-transform: rotate3d(0,0,1, -45deg);
+      transform: rotate3d(0,0,1, -45deg);
+      -webkit-transform-origin: 50% 50%;
+      transform-origin: 50% 50%;
+    }
+    #icon_menu.open span:after {
+      bottom: 0;
+      -webkit-transform: rotate3d(0,0,1, 45deg);
+      transform: rotate3d(0,0,1, 45deg);
+      -webkit-transform-origin: 50% 50%;
+      transform-origin: 50% 50%;
+    }
+    #icon_menu.open span {
+      background: transparent !important;
+    }
+    predictive-search.es-search form div.es-search-wrapper {
+      padding-right: 0;
+    }
+    div#predictive-search-results ul#predictive-search-results-list {
+      max-width: 100%;
+    }
+    .cart-mobile-bubble {
+      border-width: 0;
+      max-width: 36px;
+      overflow: hidden;
+      position: absolute;
+      left: 14px;
+      text-overflow: ellipsis;
+      top: -7px;
+      white-space: nowrap;
+      align-items: center;
+      background: #cd2215;
+      border-color: #fff;
+      border-radius: 40px;
+      border-style: solid;
+      box-shadow: 0 0 4px rgb(0 0 0 / 40%);
+      color: #fff;
+      display: flex;
+      font-size: 12px;
+      font-weight: 700;
+      height: 19px;
+      justify-content: center;
+      min-width: 19px;
+      text-align: center;
+      padding: 0 3px;
+    }
+    a.account-icon.es-aim svg {
+      height: 30px;
+      width: 30px;
+    }
+  }
+</style>
+  	<script>
+      $(window).on('load',function() {
+      	$('i[id=icon-fa]').addClass('fa fa-bars');
+      })
+	</script>
+  <script>
+    function myFunction() {
+      var a = document.getElementById("icon_menu");
+      a.classList.toggle('open');
+      var x = document.getElementById("myLinks");
+      x.classList.toggle('open');
+      $('i[id=icon-fa]').classList.toggle('fa fa-close fa-bars');
+    }
+  </script>
+
+  <script>
+    $(document).ready(function(){
+      $(".mobile_nav__toggle").click(function(){
+        $(this).parents('.parent_menu').find(".drop_menu.first_child").slideToggle("slow");
+        $(this).prev().toggleClass("active");
+         $(this).toggleClass("active");
+      });
+      
+      $(".mobile_nav__toggle_2").click(function(){
+        $(this).parents('.parent_menu_second').find(".drop_menu.second_child").slideToggle("slow");
+        $(this).toggleClass("active");
+      });
+    });
+  </script>
+
+<div class="topnav">
+  <div id="mobile-header" class="header_mobile" data-id="{{ section.id }}">
+    <a id="es-mobile-logo" href="https://www.excelsolutions.com/" class="active header__heading-link link link--text focus-inset">
+      {%- if section.settings.logo != blank -%}
+      {%- assign image_size = section.settings.logo_width | append: 'x' -%}
+      <img srcset="{{ section.settings.logo | img_url: image_size }} 1x, {{ section.settings.logo | img_url: image_size, scale: 2 }} 2x"
+           src="{{ section.settings.logo | img_url: image_size }}"
+           loading="lazy"
+           class="header__heading-logo"
+           width="{{ section.settings.logo.width }}"
+           height="{{ section.settings.logo.height }}"
+           alt="{{ section.settings.logo.alt | default: shop.name | escape }}"
+           >
+      {%- else -%}
+      <span class="h2" style="padding-bottom: 20px;">Excel Solutions®</span>
+      {%- endif -%}
+    </a>
+    <div id="myLinks">
+
+      {%- for link in section.settings.menu.links -%}
+      {%- if link.links != blank -%}
+      <div class="parent_menu">
+        <div class="drop_down">
+          <a class="firstb text_upper" href="{{ link.url }}">{{ link.title }}</a>  
+          <div class="mobile_nav__toggle">
+            <i class="fa fa-plus"></i>
+          </div>
+        </div>
+        <div class="drop_menu first_child" style="display:none;">
+          {% for childlink in link.links %}
+          {%- if childlink.links == blank -%}
+          <a href="{{ childlink.url }}">{{ childlink.title }}</a>
+          {% else %}
+          <div class="parent_menu_second">
+            <div class="drop_down">
+              <a class="firstb" href="{{ childlink.url }}">{{ childlink.title }}</a>  
+              <div class="mobile_nav__toggle_2">
+                <i class="fa fa-plus"></i>
+              </div>
+            </div>
+
+            <div class="drop_menu second_child" style="display:none;">
+              {%- for grandchildlink in childlink.links -%}
+              <a class="second_child" href="{{ grandchildlink.url }}">{{ grandchildlink.title }}</a>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}               
+          {% endfor %}
+        </div>
+      </div>
+
+      {%- else -%}
+      <a class="text_upper" href="{{ link.url }}">
+        {{ link.title | escape }}
+      </a>
+      {%- endif -%}
+      {% endfor %}        
+
+    </div>
+
+    <div style="position: absolute; top: 19px; right: 1rem;">
+      <a href="/account" class="account-icon es-aim">
+        {% render 'icon-user' %}
+      </a>
+    </div>
+
+    <div style="position: absolute; top: 18px; right: 72px;" id="cart-mobile-btn">
+      <div class="js-contents">
+        <a style="padding: 0;" href="/cart" id="cart-icon-bubble">
+          <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
+          <div style="height: 30px; width: 30px;">
+            {% render 'icon-shopping-cart' %}
+          </div>
+          {%- if cart != empty -%}
+            <div id="cart-count-bubble" class="cart-mobile-bubble">
+                {%- if cart.item_count < 100 -%}
+                  <span id="cart-count-bubble-number" aria-hidden="true">{{ cart.item_count }}</span>
+                {%- endif -%}
+                <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
+            </div>
+          {%- endif -%}
+        </a>
+      </div>
+     
+    </div>
+    <a href="javascript:void(0);" id="icon_menu" class="icon" onclick="myFunction()">
+      <span></span>
+    </a>
+  </div>
+  </div>
+  <predictive-search class="es-search large-up-hide">
+    <form action="{{ routes.search_url }}" method="get" accept-charset="utf-8" role="search" style="max-width: 90%;
+    margin: .5rem auto 1.2rem;">
+      <div class="es-search-wrapper">
+        <div class="es-search-suggest">
+          <input 
+            type="search" 
+            id="Search" 
+            name="q" 
+            placeholder="Item # or Keyword" 
+            value="{{ search.terms | escape }}"
+            role="combobox"
+            aria-expanded="false"
+            aria-owns="predictive-search-results-list"
+            aria-controls="predictive-search-results-list"
+            aria-haspopup="listbox"
+            aria-autocomplete="list"
+            autocorrect="off"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"/>
+            <input name="options[prefix]" type="hidden" value="last">
+          <button class="es-search-btn">
+            <span class="es-search-icon">
+              {% render 'icon-search' %}
+            </span>
+          </button>
+        </div>
+      </div>
+      <div id="predictive-search" tabindex="-1">
+        {%- if predictive_search.performed -%}
+          <div id="predictive-search-results">
+            <ul id="predictive-search-results-list" class="predictive-search__results-list" role="listbox" aria-labelledby="predictive-search-products">
+              {%- for product in predictive_search.resources.products -%}
+                <li class="predictive-search__list-item" role="option">
+                  <a href="{{ product.url }}" class="predictive-search__item" tabindex="-1">
+                    {%- if product.featured_media != blank -%}
+                      <img loading="lazy" class="predictive-search__image"
+                        src="{{ product.featured_media | img_url: '150x' }}"
+                        alt="{{ product.featured_media.alt }}"
+                        width="50"
+                        height="{{ 50 | divided_by: product.featured_media.preview_image.aspect_ratio }}"
+                      >
+                    {%- endif -%}
+                    <div class="predictive-search__item-content">
+                      <span class="predictive-search__item-heading">{{ product.title }}</span>
+                      <br>
+                      <span style="color: gray;">
+                        {% if product.price == 0 %}
+                          Online Pricing Unavailable
+                        {% else %}
+                          {{ product.price | money }}
+                        {% endif %}
+                      </span>
+                    </div>
+                  </a>
+                </li>
+              {%- endfor -%}
+              <li style="margin: 0 auto 0.5rem; text-align: center; color: gray;">Search results limited*</li>
+              <li class="predictive-search__list-item" role="option" style="padding-bottom: 1rem;">
+                <button class="predictive-search__item quote-cta-btn" style="margin: 0 auto; color: white; cursor: pointer;" tabindex="-1">
+                  <strong>View all “{{ predictive_search.terms }}”</strong>
+                </button>
+              </li>
+            </ul>
+          </div>
+        {%- endif -%}
+  
+      </div>
+    </form>
+  </predictive-search>
+  
+<!--   mobile end -->

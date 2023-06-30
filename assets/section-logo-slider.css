@@ -1,0 +1,38 @@
+.partners-logos-containers {
+  display: flex !important;
+  width: 100% !important;
+  padding: 2.5rem 4rem !important;
+  background-color: #f2f2f2 !important;
+}
+
+.partners-logos-sub {
+    flex: 20% !important;
+    max-width: 20% !important;
+    display: flex;
+    justify-content: center;
+}
+
+.partners-logos-sub a {
+    transition: 150ms;
+}
+
+.partners-logos-sub a:hover {
+    opacity: .65;
+}
+
+.partners-logos img {
+    vertical-align: middle;
+}
+
+@media screen and (max-width: 750px) {
+  .partners-logos-containers {
+    padding: 2.5rem 2rem !important;
+    flex-flow: row wrap;
+    justify-content: center;
+  }
+
+  .partners-logos-sub {
+    flex: 50% !important;
+    max-width: 220px !important;
+  }
+}

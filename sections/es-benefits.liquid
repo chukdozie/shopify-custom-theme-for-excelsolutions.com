@@ -1,0 +1,103 @@
+<style>
+.es-benefits-grid {
+  --min-width: 100%;
+  -moz-column-gap: .5rem;
+  column-gap: 2.5rem;
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-rows: auto;
+  grid-template-columns: repeat(4,auto);
+  grid-template-columns: repeat(var(--count,3),1fr);
+  grid-template-rows: auto;
+  width: 100%;
+}
+
+@media screen and (max-width: 567px) {
+  .es-benefits-grid {
+    grid-template-columns: unset !important;
+    grid-template-columns: unset !important;
+    row-gap: 1rem;
+  }
+}
+
+.es-benefits-item {
+  grid-row-gap: 0;
+  grid-column-gap: 24px;
+  border-radius: 4px;
+  display: grid;
+  grid-auto-rows: min-content;
+  grid-template-areas:
+      "img header"
+      "img body";
+  grid-template-columns: 47px;
+  max-width: 450px;
+  min-width: 306px;
+  padding: 1rem;
+}
+
+.es-benefits-item span {
+  -ms-grid-row-span: 3;
+  grid-area: img;
+  -ms-grid-column: 1;
+  -ms-grid-row: 1;
+}
+  
+.es-benefits-item div {
+  align-self: start;
+  grid-area: header;
+  -ms-grid-column: 3;
+  -ms-grid-row: 1;
+  font-weight: bold;
+}
+
+.es-benefits-item p {
+  align-self: start;
+  grid-area: body;
+  -ms-grid-column: 3;
+  -ms-grid-row: 3;
+  margin: 1px 0 0;
+  line-height: 1.5;
+}
+</style>
+
+<section id="es-benefits" class="shopify-section page-width es-benefits">
+  <div class="es-benefits-wrap">
+    <div class="es-benefits-grid">
+      <div class="es-benefits-item">
+        <span>{% render 'icon-truck-fast' %}</span>
+        <div>Shipping Fast and Free</div>
+        <p>Free shipping standard on all products storewide</p>
+      </div>
+      <div class="es-benefits-item">
+        <span>{% render 'icon-headset' %}</span>
+        <div>Live customer support</div>
+        <p>Reach us at 855-951-4499 weekdays from 8AM to 5PM ET</p>
+      </div>
+      <div class="es-benefits-item">
+        <span>{% render 'icon-file-circle-check' %}</span>
+        <div>Online resources available</div>
+        <p>Helpful videos, tips, user manuals and more online!</p>
+      </div>
+    </div>
+  </div>
+</section>
+  
+{% schema %}
+{
+  "name": "ES Benefits",
+  "tag": "section",
+  "class": "es-benefits",
+  "presets": [
+    {
+      "name": "ES Benefits",
+      "category": "Text"
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,79 @@
+{{ 'section-es-home-contact.aio.min.css' | asset_url | stylesheet_tag }}
+
+<div class="es-home-contact">
+  <h5 class="title">{{ section.settings.heading | escape }}</h5>
+  {%- form 'contact', id: 'ContactForm' -%}
+    {%- if form.posted_successfully? -%}
+      <div class="form-status form-status-list form__message" tabindex="-1" autofocus>{% render 'icon-success' %} {{ 'templates.contact.form.post_success' | t }}</div>
+    {%- elsif form.errors -%}
+      <div class="form__message">
+        <h5 class="form-status caption-large" role="alert" tabindex="-1" autofocus>{% render 'icon-error' %} {{ 'templates.contact.form.error_heading' | t }}</h5>
+      </div>
+    {%- endif -%}
+    <div class="eshf-row">
+      <div class="eshf-row-column">
+        <div class="eshf-row-column e-left">
+          <h5 class="title">request a call back.</h5>
+          <p>For help with loading dock levelers, dock seals, high speed doors and more, submit your details and we will give you a call regarding your request.</p>
+        </div>
+        <div class="eshf-row-column e-right">
+          <p>I would like to discuss:</p>
+          <div class="contact__fields">
+            <div class="eshf-field">
+              <div class="select">
+                <select class="select__select" name="discuss" id="discuss">
+                  <option value="Dock Equipment">Dock Equipment</option>
+                  <option value="Industrial Doors">Industrial Doors</option>
+                  <option value="Freight Lifts">Freight Lifts</option>
+                  <option value="Warehouse Products">Warehouse Products</option>
+                  <option value="Repair Services">Repair Services</option>
+                </select>
+                {% render 'icon-caret' %}
+              </div>
+            </div>
+            <div class="eshf-field">
+              <div class="field">
+                <input class="field__input" autocomplete="name" type="text" id="ContactForm-name" name="contact[{{ 'templates.contact.form.name' | t }}]" value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}" placeholder="{{ 'templates.contact.form.name' | t }}">
+                <label class="field__label" for="ContactForm-name">{{ 'templates.contact.form.name' | t }}</label>
+              </div>
+            </div>
+            <div class="eshf-field">
+              <div class="field">
+                <input type="tel" id="ContactForm-phone" class="field__input" autocomplete="tel" name="contact[{{ 'templates.contact.form.phone' | t }}]" pattern="[0-9\-]*" value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}" placeholder="{{ 'templates.contact.form.phone' | t }}">
+                <label class="field__label" for="ContactForm-phone">{{ 'templates.contact.form.phone' | t }}</label>
+              </div>
+            </div>
+            <div class="eshf-field">
+              <div class="contact__button">
+                <button type="submit" class="button">
+                  {{ 'templates.contact.form.send' | t }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {%- endform -%}
+</div>
+
+{% schema %}
+{
+  "name": "ES Home Contact",
+  "tag": "section",
+  "class": "spaced-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Contact form",
+      "label": "Heading"
+    }
+  ],
+  "presets": [
+    {
+      "name": "ES Home Contact"
+    }
+  ]
+}
+{% endschema %}

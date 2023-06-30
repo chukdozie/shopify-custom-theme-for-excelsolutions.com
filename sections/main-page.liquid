@@ -1,0 +1,20 @@
+<link rel="stylesheet" href="{{ 'section-main-page.aio.min.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-rte.aio.min.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-collection-hero.aio.min.css' | asset_url }}" media="print" onload="this.media='all'">
+
+<noscript>{{ 'section-main-page.aio.min.css' | asset_url | stylesheet_tag }}</noscript>
+<noscript>{{ 'component-rte.aio.min.css' | asset_url | stylesheet_tag }}</noscript>
+
+<div class="page-width">
+  <div class="rte">
+    {{ page.content }}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.main-page.name",
+  "tag": "section",
+  "class": "spaced-section"
+}
+{% endschema %}

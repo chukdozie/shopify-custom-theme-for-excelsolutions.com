@@ -1,0 +1,128 @@
+{{ 'section-contact-form.aio.min.css' | asset_url | stylesheet_tag }}
+
+<div class="contact page-width page-width--narrow spaced-section">
+  <h2 class="title">{{ section.settings.heading | escape }}</h2>
+  {%- form 'contact', id: 'FeedbackForm' -%}
+    {%- if form.posted_successfully? -%}
+      <div class="form-status form-status-list form__message" tabindex="-1" autofocus>{% render 'icon-success' %} {{ 'templates.contact.form.post_success' | t }}</div>
+    {%- elsif form.errors -%}
+      <div class="form__message">
+        <h2 class="form-status caption-large" role="alert" tabindex="-1" autofocus>{% render 'icon-error' %} {{ 'templates.contact.form.error_heading' | t }}</h2>
+      </div>
+      <ul class="form-status-list caption-large" role="list">
+        <li>
+          <a href="#FeedbackForm-email" class="link">
+            {{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}
+          </a>
+        </li>
+      </ul>
+    {%- endif -%}
+    <div class="qq-contact-row">
+        <div class="field-container">
+            <div class="field-container cfc-50">
+                <div class="field">
+                    <div class="select">
+                        <select required="true" class="select__select" id="feedback_type" name="contact[feedback_type]" placeholder="Feedback Type">
+                            <option value="Feedback Type">Feedback Type</option>
+                            <option value="General Comment(s)">General Comment(s)</option>
+                            <option value="Product Feedback">Product Feedback</option>
+                            <option value="Service Feedback">Service Feedback</option>
+                            <option value="Bug Report">Bug Report</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        {% render 'icon-caret' %}
+                    </div>
+                </div>
+            </div>
+            <div class="field-container cfc-50">
+                <div class="field">
+                    <input required="true" class="field__input" type="text" id="FeedbackForm-feedback_subject" name="contact[feedback_subject]" placeholder="Subject">
+                    <label class="field__label" for="FeedbackForm-feedback_subject">Subject</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <textarea
+                        rows="10"
+                        id="FeedbackForm-feedback_comments"
+                        class="text-area field__input"
+                        name="contact[feedback_comments]"
+                        placeholder="Comments"
+                        required="true"
+                    >
+                        {{- form.body -}}
+                    </textarea>
+                    <label class="form__label field__label" for="FeedbackForm-feedback_comments">Your Comment(s)</label>
+                </div>
+            </div>
+            <div class="field-container cfc-33">
+                <div class="field">
+                    <input class="field__input" type="text" id="FeedbackForm-representative" name="contact[representative]" placeholder="Representative">
+                    <label class="field__label" for="FeedbackForm-representative">Representative</label>
+                </div>
+            </div>
+            <div class="field-container cfc-33">
+                <div class="field">
+                    <input class="field__input" type="text" id="FeedbackForm-name_or_company" name="contact[name_or_company]" placeholder="Name / Company">
+                    <label class="field__label" for="FeedbackForm-name_or_company">Name / Company</label>
+                </div>
+            </div>
+            <div class="field-container cfc-33">
+                <div class="field field--with-error">
+                    <input
+                        autocomplete="email"
+                        type="email"
+                        id="FeedbackForm-email"
+                        class="field__input"
+                        name="contact[email]"
+                        spellcheck="false"
+                        autocapitalize="off"
+                        value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+                        aria-required="true"
+                        {% if form.errors contains 'email' %}
+                            aria-invalid="true"
+                            aria-describedby="FeedbackForm-email-error"
+                        {% endif %}
+                        placeholder="{{ 'templates.contact.form.email' | t }}"
+                    >
+                    <label class="field__label" for="FeedbackForm-email">{{ 'templates.contact.form.email' | t }} <span aria-hidden="true">*</span></label>
+                    {%- if form.errors contains 'email' -%}
+                        <small class="contact__field-error" id="FeedbackForm-email-error">
+                            <span class="visually-hidden">{{ 'accessibility.error' | t }}</span>
+                            <span class="form__message">{% render 'icon-error' %}{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}</span>
+                        </small>
+                    {%- endif -%}
+                </div>
+            </div>
+            <div class="field-container cfc-50">
+                <div class="contact__button">
+                    <button type="submit" class="button">
+                        {{ 'templates.contact.form.send' | t }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+  {%- endform -%}
+</div>
+
+{% schema %}
+{
+  "name": "Feedback",
+  "tag": "section",
+  "class": "spaced-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Feedback",
+      "label": "Heading"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Feedback"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,5 @@
+/*
+Generated time: June 26, 2023 06:08
+This file was created by the app developer. Feel free to contact the original developer with any questions. It was minified (compressed) by AVADA. AVADA do NOT own this script.
+*/
+.blog-articles{display:grid;grid-gap:4rem}@media screen and (min-width:750px){.blog-articles{grid-template-columns:1fr 1fr 1fr}}

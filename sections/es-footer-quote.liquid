@@ -1,0 +1,122 @@
+<style>
+.quote-cta {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 4rem;
+  background-color: #fcb900;
+}
+
+.quote-cta div h3 {
+  font-family: Rubik, system-ui;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 24px;
+  color: #222222;
+  margin: 18.26px 0;
+}
+
+.quote-cta-btn {
+  cursor: pointer;
+  background-color: #1d3961;
+  padding: 9px 10px 9px 20px;
+  border-radius: 3px;
+  border: 3px solid #1d3961;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: Rubik;
+  text-transform: lowercase;
+  transition: 100ms;
+}
+
+.quote-cta-btn:hover {
+  background-color: #fcb900;
+  border: 3px solid #1d3961;
+  color: #1d3961 !important;
+}
+
+.quote-cta-btn:hover a {
+  color: #1d3961;
+}
+
+.quote-cta-btn:hover path {
+  fill: #1d3961;
+}
+
+.quote-cta-btn a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 14px;
+  letter-spacing: .3px;
+}
+
+.quote-cta-btn svg {
+  display: block;
+  margin: 0 auto;
+  text-align: center !important;
+  height: 14px !important;
+}
+
+@media screen and (max-width: 999px) {
+  .quote-cta {
+    display: block;
+    text-align: center;
+    padding: 1px 2rem 10px;
+  }
+  .quote-cta-btn {
+    max-width: fit-content;
+    margin: 0 auto;
+    margin-bottom: 1rem;
+  }
+}
+</style>
+
+<div class="quote-cta">
+  <div class="quote-cta-header">
+    <h3>{{ section.settings.heading }}</h3>
+  </div>
+  <div class="quote-cta-btn">
+    <a href="{{ section.settings.url }}">{{ section.settings.button_text }}</a>
+    <div style="width: 14px; margin-left: 14px; display: flex; align-items: center; height: 100%;">
+      {% render 'icon-chevron' %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Quote CTA",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Looking for First-Rate Equipment on Your Project?",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "default": "get a quote",
+      "label": "Button text"
+    },
+    {
+      "type": "url",
+      "id": "url",
+      "label": "Link for button"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Quote CTA",
+      "settings": {
+      "heading": "Get a Quote"
+      }
+    }
+  ]
+}
+{% endschema %}

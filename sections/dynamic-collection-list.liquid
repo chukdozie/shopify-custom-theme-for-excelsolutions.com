@@ -1,0 +1,101 @@
+{{ 'section-collection-list.aio.min.css' | asset_url | stylesheet_tag }}
+<link rel="stylesheet" href="{{ 'component-slider.aio.min.css' | asset_url }}" media="print" onload="this.media='all'">
+
+<noscript>{{ 'component-slider.aio.min.css' | asset_url | stylesheet_tag }}</noscript>
+
+{{ 'component-card.aio.min.css' | asset_url | stylesheet_tag }}
+
+{% if collection.metafields.custom.schematic_collection != blank %}
+
+<section id="shopify-section-[id]" class="shopify-section spaced-section collection-list-section schematic-list">
+  <div class="collection-list-wrapper page-width no-heading no-mobile-link">
+    <slider-component class="slider-mobile-gutter">
+      <ul class="collection-list grid grid--2-col grid--3-col-tablet negative-margin--small"
+        id="Slider-{{ section.id }}"
+        role="list"
+      >
+      {% assign schematic_collection = collection.metafields.custom.schematic_collection.value %}
+        {% for collection in schematic_collection %}
+        <li class="collection-list__item grid__item">
+          <a href="{{ collection.url }}"
+            class="card animate-arrow link card--media"
+          >
+            <div class="card--stretch card-colored color-background-1 collection-card">
+              {%- if collection.image != blank -%}
+                <div class="card__media-spacer">
+                  <div class="overlay-card"></div>
+                  <div class="media media--square media--hover-effect overflow-hidden">
+                    <img srcset="{%- if collection.image.width >= 165 -%}{{ collection.image | img_url: '165x' }} 165w,{%- endif -%}
+                      {%- if collection.image.width >= 330 -%}{{ collection.image | img_url: '330x' }} 330w,{%- endif -%}
+                      {%- if collection.image.width >= 535 -%}{{ collection.image | img_url: '535x' }} 535w,{%- endif -%}
+                      {%- if collection.image.width >= 720 -%}{{ collection.image | img_url: '720x' }} 720w,{%- endif -%}
+                      {%- if collection.image.width >= 940 -%}{{ collection.image | img_url: '940x' }} 940w,{%- endif -%}
+                      {%- if collection.image.width >= 1440 -%}{{ collection.image | img_url: '1440x' }} 1440w,{%- endif -%}
+                      {%- if collection.image.width >= 1880 -%}{{ collection.image | img_url: '1880x' }} 1880w{%- endif -%}"
+                      src="{{ collection.image | img_url: '533x' }}"
+                      sizes="(min-width: 1100px){% if collection.metafields.custom.schematic_collection > 1 %}535px{% else %}940px{% endif %}, (min-width: 750px) {% if collection.metafields.custom.schematic_collection > 1 %}calc((100vw - 10rem) / 2){% else %}calc(100vw - 10rem){% endif %}, calc(100vw - 3rem)"
+                      alt="{{ collection.title | escape }}"
+                      height="{{ collection.image.height }}"
+                      width="{{ collection.image.width }}"
+                      loading="lazy"
+                      class="motion-reduce"
+                    >
+                  </div>
+                </div>
+
+                <div class="card__text card__text-spacing card-colored card__text-hover">
+                  <h3 class="grid_title">
+                    {%- if collection.metafields.custom.displayname != blank -%}
+                      {{- collection.metafields.custom.displayname | escape -}}
+                    {%- else -%}
+                      {{ 'onboarding.collection_title' | t }}
+                    {%- endif -%}
+                  </h3>
+                </div>
+              {%- else -%}
+                <div class="overlay-card"></div>
+                <div class="card__text-spacing card__text-hover">
+                  <h3 class="h1">
+                    {%- if collection.metafields.custom.displayname != blank -%}
+                      {{- collection.metafields.custom.displayname | escape -}}{%- if collection.description == blank -%}<span class="icon-wrap">&nbsp;{% render 'icon-arrow' %}</span>{% endif %}
+                    {%- else -%}
+                      {{ 'onboarding.collection_title' | t }}
+                    {%- endif -%}
+                  </h3>
+
+                  {%- if collection.description != blank -%}
+                    <p class="card__caption">
+                      {{- collection.description | strip_html | truncatewords: 12 -}}
+                    </p>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            </div>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </slider-component>
+  </div>
+</section>
+
+{% endif %}
+  
+{% schema %}
+{
+  "name": "Schematic Collections",
+  "tag": "section",
+  "class": "schematic-list",
+  "presets": [
+    {
+      "name": "Schematic Collections"
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

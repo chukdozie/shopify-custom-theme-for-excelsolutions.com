@@ -1,0 +1,147 @@
+.price {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  font-size: 2rem;
+  letter-spacing: 0rem;
+  line-height: 1.5;
+  color: rgb(var(--color-foreground));
+}
+
+.price.price--unavailable {
+  visibility: hidden;
+}
+
+.price--end {
+  justify-content: flex-end;
+}
+
+.cart-item__details .price.price--end {
+  justify-content: flex-start;
+  font-size: 1.5rem;
+}
+
+.price dl {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.price dd {
+  margin: 0 0.4rem 0 0;
+}
+
+.price .price__last:last-of-type {
+  margin: 0;
+}
+
+@media screen and (min-width: 750px) {
+  .price {
+    margin-bottom: 0;
+  }
+  th#es-header-eap, td#es-eap {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .cart-item__details .price.price--end {
+    display: none;
+  }
+}
+
+.price--large {
+  font-size: 1.6rem;
+  line-height: 1.5;
+  letter-spacing: 0rem;
+}
+
+@media screen and (min-width: 750px) {
+  .price--large {
+    font-size: 2rem;
+  }
+}
+
+.price--sold-out .price__availability,
+.price__regular {
+  display: block;
+}
+
+.price__sale,
+.price__availability,
+.price .price__badge-sale,
+.price .price__badge-sold-out,
+.price--on-sale .price__regular,
+.price--on-sale .price__availability,
+.price--no-compare .price__compare {
+  display: none;
+}
+
+.price--sold-out .price__badge-sold-out,
+.price--on-sale .price__badge-sale {
+  display: inline-flex;
+}
+
+.price--on-sale .price__sale {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.price--center {
+  display: flex;
+  justify-content: center;
+}
+
+.price--on-sale .price-item--regular {
+  text-decoration: line-through;
+  color: #707070 !important;
+  opacity: 0.7;
+  font-size: 1.5rem;
+}
+
+.unit-price {
+  font-size: 1.1rem;
+  letter-spacing: 0rem;
+  line-height: 1.2;
+  margin-top: 0.2rem;
+  text-transform: uppercase;
+  color: rgba(var(--color-foreground), 0.7);
+}
+
+/* Custom */
+.price-item.price-item--sale.price-item--price {
+  color: #ff4c4c !important;
+  letter-spacing: -0.02rem;
+}
+
+.es-price-table span.price-item.price-item--sale.price-item--price {
+  font-size: 1.6rem;
+}
+
+.es-price-table .price--on-sale .price__sale {
+  justify-content: center;
+}
+
+dd.price__compare {
+  display: flex;
+  align-items: center;
+}
+
+.card-information span.price-item.price-item--regular {
+  font-size: 2rem;
+}
+
+span.price-item.price-item--regular {
+  font-size: 2.5rem;
+  letter-spacing: -0.05rem;
+}
+
+.es-price span.price-item.price-item--sale.price-item--price {
+    font-size: 2.3rem;
+}
+
+.es-price s.price-item.price-item--regular {
+    font-size: 1.9rem;
+}

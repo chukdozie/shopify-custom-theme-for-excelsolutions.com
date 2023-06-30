@@ -1,0 +1,35 @@
+.es-desktop {
+  display: block;
+}
+.es-tablet {
+  display: none;
+}
+.es-mobile {
+  display: none;
+}
+
+@media screen and (max-width: 1000px) {
+  .es-desktop {
+    display: none;
+  }
+  .es-tablet {
+    display: block;
+  }
+  .es-mobile {
+    display: none;
+  }
+}
+@media screen and (max-width: 749px) {
+  .es-desktop {
+    display: none;
+  }
+  .es-tablet {
+    display: none;
+  }
+  .es-mobile {
+    display: block;
+  }
+  .es-mobile img {
+    width: 95%;
+  }
+}

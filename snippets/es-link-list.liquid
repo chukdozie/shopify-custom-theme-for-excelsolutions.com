@@ -1,0 +1,172 @@
+<style>
+.es-bar-grid {
+  display: grid;
+  grid-template-columns: 63% 37%;
+  align-items: center;
+  grid-template-rows: auto;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+}
+
+.es-bar {
+  margin: 0 auto;
+  padding: 0;
+  background-color: #1d3961;
+  color: white;
+}
+
+.es-navs {
+  grid-column: span 1;
+  width: max-content;
+}
+
+div.es-navs ul {
+  list-style: none; 
+  display: inline-flex; 
+  margin: 0; 
+  padding: 0 20px;
+}
+
+.es-navs > ul > li > a {
+  display: block;
+  text-decoration: none;
+  color: white;
+  font-family: 'Rubik', sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  padding: 16px 21px;
+  height: 48px;
+}
+
+.es-navs ul a:hover {
+  color: #ffba00;
+}
+
+.es-submenu {
+  width: max-content;
+  background-color: white;
+  margin-top: 10px;
+  margin-left: 5px;
+}
+
+ul.header__submenu.es-submenu li:empty {
+  text-decoration: underline;
+}
+
+div.es-navs ul li {
+  position: relative;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .3px !important;
+}
+
+div.es-navs ul li ul {
+  display: none;
+  position: absolute;
+}
+
+div.es-navs ul li:hover ul {
+  display: block;
+  box-shadow: 0 2px 6px 0 rgb(0 0 0 / 27%);
+  width: 230px;
+}
+
+ul.header__submenu li a.list-menu__item, .es-subsub li a {
+  display: block;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 8px 20px;
+}
+
+ul.es-submenu li a {
+  color: black;
+}
+
+ul.es-submenu li a:hover {
+  background-color: #1d3961;
+  color: white;
+}
+
+div.es-navs > ul > li > ul > li > ul.es-subsub {
+  display: none;
+  position: absolute;
+}
+
+div.es-navs ul li ul li:hover ul.es-subsub {
+  display: block;
+  box-shadow: 0 2px 6px 0 rgb(0 0 0 / 27%);
+  width: 230px;
+  left: 100%;
+  padding: 5px 0;
+  background-color: #1d3961;
+  top: 0px;
+}
+
+ul.es-submenu li ul li a {
+  color: white;
+  transition: 100ms;
+}
+
+ul.es-submenu li ul li a:hover {
+  color: #ffba00;
+}
+
+ul.es-submenu li a:first-child:nth-last-child(2):before { 
+  content: '';
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  margin: -4px 0 0;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-left: 5px solid #ccc;
+ }
+
+ ul.es-submenu li a:first-child:nth-last-child(2):hover:before { 
+  border-left-color: #fcb900;
+ }
+</style>
+
+<nav style="position: absolute;margin-top: -2.5rem; padding: 0; width: 100%;" class="small-hide-nav" role="navigation">
+  <div class="es-bar es-bar-grid">
+    <div class="es-navs">
+      <ul role="list">
+        {%- for link in linklists.main-menu.links -%}
+          <li>
+            <a href="{{ link.url }}" {% if link.active %}aria-current="page"{% endif %} class="header__menu-item list-menu__item link focus-inset">
+              {{ link.title | upcase }}
+            </a>
+    
+            {%- if link.links != blank -%}
+              <ul class="header__submenu list-menu es-submenu caption-large motion-reduce" role="list" tabindex="-1">
+                {%- for child_link in link.links -%}
+                  <li>
+                    <a href="{{ child_link.url }}" {% if child_link.active %}aria-current="page"{% endif %} class="header__menu-item list-menu__item link link--text focus-inset caption-large">
+                      {{ child_link.title }}
+                    </a>
+    
+                    {%- if child_link.links != blank -%}
+                      <ul class="es-subsub">
+                        {%- for grandchild_link in child_link.links -%}
+                          <li>
+                            <a href="{{ grandchild_link.url }}" {% if grandchild_link.active %}aria-current="page"{% endif %}>
+                              {{ grandchild_link.title }}
+                            </a>
+                          </li>
+                        {%- endfor -%}
+                      </ul>
+                    {%- endif -%}
+    
+                  </li>
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+    
+          </li>
+        {%- endfor -%}
+      </ul>
+    </div>
+    {% render 'es-link-search' %}
+  </div>
+</nav>

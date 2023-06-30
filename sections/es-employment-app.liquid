@@ -1,0 +1,666 @@
+{{ 'section-contact-form.aio.min.css' | asset_url | stylesheet_tag }}
+
+<div class="contact page-width page-width--narrow spaced-section">
+  <h2 class="title">{{ section.settings.heading | escape }}</h2>
+  {%- form 'contact', id: 'EmploymentForm' -%}
+    {%- if form.posted_successfully? -%}
+      <div class="form-status form-status-list form__message" tabindex="-1" autofocus>{% render 'icon-success' %} {{ 'templates.contact.form.post_success' | t }}</div>
+    {%- elsif form.errors -%}
+      <div class="form__message">
+        <h2 class="form-status caption-large" role="alert" tabindex="-1" autofocus>{% render 'icon-error' %} {{ 'templates.contact.form.error_heading' | t }}</h2>
+      </div>
+      <ul class="form-status-list caption-large" role="list">
+        <li>
+          <a href="#EmploymentForm-email" class="link">
+            {{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}
+          </a>
+        </li>
+      </ul>
+    {%- endif -%}
+    <div class="qq-contact-row">
+        <div class="field-container">
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input required="true" class="field__input" type="text" id="EmploymentForm-full_name" name="contact[full_name]" placeholder="Full Name">
+                    <label class="field__label" for="EmploymentForm-full_name">Full Name</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field field--with-error">
+                    <input
+                        autocomplete="email"
+                        type="email"
+                        id="EmploymentForm-email"
+                        class="field__input"
+                        name="contact[email]"
+                        spellcheck="false"
+                        autocapitalize="off"
+                        value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+                        aria-required="true"
+                        {% if form.errors contains 'email' %}
+                            aria-invalid="true"
+                            aria-describedby="EmploymentForm-email-error"
+                        {% endif %}
+                        placeholder="{{ 'templates.contact.form.email' | t }}"
+                    >
+                    <label class="field__label" for="EmploymentForm-email">{{ 'templates.contact.form.email' | t }} <span aria-hidden="true">*</span></label>
+                    {%- if form.errors contains 'email' -%}
+                        <small class="contact__field-error" id="EmploymentForm-email-error">
+                            <span class="visually-hidden">{{ 'accessibility.error' | t }}</span>
+                            <span class="form__message">{% render 'icon-error' %}{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}</span>
+                        </small>
+                    {%- endif -%}
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input required="true" type="tel" id="EmploymentForm-phone" class="field__input" autocomplete="tel" name="contact[{{ 'templates.contact.form.phone' | t }}]" pattern="[0-9\-]*" value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}" placeholder="{{ 'templates.contact.form.phone' | t }}">
+                    <label class="field__label" for="EmploymentForm-phone">{{ 'templates.contact.form.phone' | t }}</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input required="true" class="field__input" type="text" id="EmploymentForm-street" name="contact[street]" placeholder="Street">
+                    <label class="field__label" for="EmploymentForm-street">Street Address</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input required="true" class="field__input" type="text" id="EmploymentForm-city" name="contact[city]" placeholder="City">
+                    <label class="field__label" for="EmploymentForm-city">City</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input required="true" class="field__input" type="text" id="EmploymentForm-state" name="contact[state]" placeholder="State">
+                    <label class="field__label" for="EmploymentForm-state">State</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input required="true" class="field__input" type="text" id="EmploymentForm-zip" name="contact[zip]" placeholder="ZIP">
+                    <label class="field__label" for="EmploymentForm-zip">ZIP</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <div class="select">
+                        <select required="true" class="select__select" id="authorized_to_work_in_usa" name="contact[authorized_to_work_in_usa]">
+                            <option value="Are you authorized to work in the United States?">Are you authorized to work in the United States?</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                        {% render 'icon-caret' %}
+                    </div>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <div class="select">
+                        <select required="true" class="select__select" id="18_or_older" name="contact[18_or_older]">
+                            <option value="Are you 18 or older?">Are you 18 or older?</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                        {% render 'icon-caret' %}
+                    </div>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <div class="select">
+                        <select required="true" class="select__select" id="felony_or_connection_on_record" name="contact[felony_or_connection_on_record]">
+                            <option value="Have you been convicted of a felony or incarcerated in connection with a felony in the past 7 years?">Have you been convicted of a felony or incarcerated in connection with a felony in the past 7 years?</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                        {% render 'icon-caret' %}
+                    </div>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input class="field__input" type="text" id="EmploymentForm-if_felony_explain" name="contact[if_felony_explain]" placeholder="If yes, please explain:">
+                    <label class="field__label" for="EmploymentForm-if_felony_explain">If yes, please explain:</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <div class="select">
+                        <select required="true" class="select__select" id="current_military_service" name="contact[current_military_service]">
+                            <option value="Current Military Service?">Current Military Service?</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                        {% render 'icon-caret' %}
+                    </div>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input class="field__input" type="text" id="EmploymentForm-military_branch_and_rank" name="contact[military_branch_and_rank]" placeholder="If yes, what branch and rank?">
+                    <label class="field__label" for="EmploymentForm-military_branch_and_rank">If yes, what branch and rank?</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <div class="select">
+                        <select required="true" class="select__select" id="veteran" name="contact[veteran]">
+                            <option value="Are you a veteran?">Are you a veteran?</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                        {% render 'icon-caret' %}
+                    </div>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input class="field__input" type="text" id="EmploymentForm-if_veteran_branch_and_rank" name="contact[if_veteran_branch_and_rank]" placeholder="If yes, what branch and final rank?">
+                    <label class="field__label" for="EmploymentForm-if_veteran_branch_and_rank">If yes, what branch and final rank?</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input required="true" class="field__input" type="text" id="EmploymentForm-position_applying_for" name="contact[position_applying_for]" placeholder="What position are you applying for?">
+                    <label class="field__label" for="EmploymentForm-position_applying_for">What position are you applying for?</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input required="true" class="field__input" type="text" id="EmploymentForm-how_did_you_hear_about_us" name="contact[how_did_you_hear_about_us]" placeholder="How did you hear about us?">
+                    <label class="field__label" for="EmploymentForm-how_did_you_hear_about_us">How did you hear about us?</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input required="true" class="field__input" type="text" id="EmploymentForm-hourly_or_salary" name="contact[hourly_or_salary]" placeholder="Hourly / Salary">
+                    <label class="field__label" for="EmploymentForm-hourly_or_salary">Hourly or salary?</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input required="true" class="field__input" type="text" id="EmploymentForm-weekly_earnings" name="contact[weekly_earnings]" placeholder="Expected weekly earnings?">
+                    <label class="field__label" for="EmploymentForm-weekly_earnings">Expected weekly earnings?</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input required="true" class="field__input" type="date" id="EmploymentForm-date_available" name="contact[date_available]" placeholder="Expected weekly earnings?">
+                    <label class="field__label" for="EmploymentForm-date_available">Date available for work?</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div>
+                    <span style="color: #000000; font-size: 16px; font-weight: bold;">Employment History (Most Recent)</span>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input required="true" class="field__input" type="text" id="EmploymentForm-previous_employer_1" name="contact[previous_employer_1]" placeholder="Company Name">
+                    <label class="field__label" for="EmploymentForm-previous_employer_1">Current or Previous Employer</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input required="true" class="field__input" type="text" id="EmploymentForm-employer_1_address" name="contact[employer_1_address]" placeholder="Street, City, ST, ZIP Code">
+                    <label class="field__label" for="EmploymentForm-employer_1_address">Employer Address</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input required="true" class="field__input" type="text" id="EmploymentForm-supervisor_1" name="contact[supervisor_1]" placeholder="Supervisor">
+                    <label class="field__label" for="EmploymentForm-supervisor_1">Supervisor</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input required="true" type="tel" id="EmploymentForm-supervisor_phone" class="field__input" name="contact[supervisor_phone]" pattern="[0-9\-]*" placeholder="Phone Number">
+                    <label class="field__label" for="EmploymentForm-supervisor_phone">Phone Number</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input required="true" class="field__input" type="text" id="EmploymentForm-position_1" name="contact[position_1]" placeholder="Position / Title">
+                    <label class="field__label" for="EmploymentForm-position_1">Position / Title</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input required="true" class="field__input" type="text" id="EmploymentForm-compensation_1" name="contact[compensation_1]" placeholder="Compensation">
+                    <label class="field__label" for="EmploymentForm-compensation_1">Compensation</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input required="true" class="field__input" type="date" id="EmploymentForm-start_date_1" name="contact[start_date_1]" placeholder="Start Date">
+                    <label class="field__label" for="EmploymentForm-start_date_1">Start Date</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input required="true" class="field__input" type="date" id="EmploymentForm-end_date_1" name="contact[end_date_1]" placeholder="End Date (if applicable)">
+                    <label class="field__label" for="EmploymentForm-end_date_1">End Date (if applicable)</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input required="true" class="field__input" type="text" id="EmploymentForm-reason_for_leaving_1" name="contact[reason_for_leaving_1]" placeholder="Reason for leaving">
+                    <label class="field__label" for="EmploymentForm-reason_for_leaving_1">Reason for leaving</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <div class="select">
+                        <select required="true" class="select__select" id="may_we_contact_1" name="contact[may_we_contact_1]">
+                            <option value="May we contact?">May we contact?</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                        {% render 'icon-caret' %}
+                    </div>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div>
+                    <span style="color: #000000; font-size: 16px; font-weight: bold;">Employment History (Second)</span>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input class="field__input" type="text" id="EmploymentForm-previous_employer_2" name="contact[previous_employer_2]" placeholder="Company Name">
+                    <label class="field__label" for="EmploymentForm-previous_employer_2">Current or Previous Employer</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input class="field__input" type="text" id="EmploymentForm-employer_address_2" name="contact[employer_address_2]" placeholder="Street, City, ST, ZIP Code">
+                    <label class="field__label" for="EmploymentForm-employer_address_2">Employer Address</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input class="field__input" type="text" id="EmploymentForm-supervisor_2" name="contact[supervisor_2]" placeholder="Supervisor">
+                    <label class="field__label" for="EmploymentForm-supervisor_2">Supervisor</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input type="tel" id="EmploymentForm-supervisor_2_phone" class="field__input" name="contact[supervisor_2_phone]" pattern="[0-9\-]*" placeholder="Phone Number">
+                    <label class="field__label" for="EmploymentForm-supervisor_2_phone">Phone Number</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input class="field__input" type="text" id="EmploymentForm-position_2" name="contact[position_2]" placeholder="Position / Title">
+                    <label class="field__label" for="EmploymentForm-position_2">Position / Title</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input class="field__input" type="text" id="EmploymentForm-position_2_compensation" name="contact[position_2_compensation]" placeholder="Compensation">
+                    <label class="field__label" for="EmploymentForm-position_2_compensation">Compensation</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input class="field__input" type="date" id="EmploymentForm-start_date_2" name="contact[start_date_2]" placeholder="Start Date">
+                    <label class="field__label" for="EmploymentForm-start_date_2">Start Date</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input class="field__input" type="date" id="EmploymentForm-end_date_2" name="contact[end_date_2]" placeholder="End Date (if applicable)">
+                    <label class="field__label" for="EmploymentForm-end_date_2">End Date (if applicable)</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input class="field__input" type="text" id="EmploymentForm-reason_for_leaving_2" name="contact[reason_for_leaving_2]" placeholder="Reason for leaving">
+                    <label class="field__label" for="EmploymentForm-reason_for_leaving_2">Reason for leaving</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <div class="select">
+                        <select class="select__select" id="may_we_contact_2" name="contact[may_we_contact_2]">
+                            <option value="May we contact?">May we contact?</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                        {% render 'icon-caret' %}
+                    </div>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div>
+                    <span style="color: #000000; font-size: 16px; font-weight: bold;">Employment History (Third)</span>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input class="field__input" type="text" id="EmploymentForm-previous_employer_3" name="contact[previous_employer_3]" placeholder="Company Name">
+                    <label class="field__label" for="EmploymentForm-previous_employer_3">Current or Previous Employer</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input class="field__input" type="text" id="EmploymentForm-employer_3_address" name="contact[employer_3_address]" placeholder="Street, City, ST, ZIP Code">
+                    <label class="field__label" for="EmploymentForm-employer_3_address">Employer Address</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input class="field__input" type="text" id="EmploymentForm-supervisor_3" name="contact[supervisor_3]" placeholder="Supervisor">
+                    <label class="field__label" for="EmploymentForm-supervisor_3">Supervisor</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input type="tel" id="EmploymentForm-supervisor_3_phone" class="field__input" name="contact[supervisor_3_phone]" pattern="[0-9\-]*" placeholder="Phone Number">
+                    <label class="field__label" for="EmploymentForm-supervisor_3_phone">Phone Number</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input class="field__input" type="text" id="EmploymentForm-position_3" name="contact[position_3]" placeholder="Position / Title">
+                    <label class="field__label" for="EmploymentForm-position_3">Position / Title</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input class="field__input" type="text" id="EmploymentForm-position_3_compensation" name="contact[position_3_compensation]" placeholder="Compensation">
+                    <label class="field__label" for="EmploymentForm-position_3_compensation">Compensation</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input class="field__input" type="date" id="EmploymentForm-start_date_3" name="contact[start_date_3]" placeholder="Start Date">
+                    <label class="field__label" for="EmploymentForm-start_date_3">Start Date</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input class="field__input" type="date" id="EmploymentForm-end_date_3" name="contact[end_date_3]" placeholder="End Date (if applicable)">
+                    <label class="field__label" for="EmploymentForm-end_date_3">End Date (if applicable)</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input class="field__input" type="text" id="EmploymentForm-reason_for_leaving_3" name="contact[reason_for_leaving_3]" placeholder="Reason for leaving">
+                    <label class="field__label" for="EmploymentForm-reason_for_leaving_3">Reason for leaving</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <div class="select">
+                        <select class="select__select" id="may_we_contact_3" name="contact[may_we_contact_3]">
+                            <option value="May we contact?">May we contact?</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                        {% render 'icon-caret' %}
+                    </div>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div>
+                    <span style="color: #000000; font-size: 16px; font-weight: bold;">Education History</span>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input required="true" class="field__input" type="text" id="EmploymentForm-high_school" name="contact[high_school]" placeholder="Name / Location">
+                    <label class="field__label" for="EmploymentForm-high_school">High School Name</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input required="true" class="field__input" type="text" id="EmploymentForm-hs_last_year_completed" name="contact[hs_last_year_completed]" placeholder="09 / 10 / 11 / 12">
+                    <label class="field__label" for="EmploymentForm-hs_last_year_completed">Last Year Complete</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input required="true" class="field__input" type="text" id="EmploymentForm-hs_degree" name="contact[hs_degree]" placeholder="Degree">
+                    <label class="field__label" for="EmploymentForm-hs_degree">Degree</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input required="true" class="field__input" type="text" id="EmploymentForm-hs_major" name="contact[hs_major]" placeholder="Major / Emphasis">
+                    <label class="field__label" for="EmploymentForm-hs_major">Major / Emphasis</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input class="field__input" type="text" id="EmploymentForm-college_name" name="contact[college_name]" placeholder="Name / Location">
+                    <label class="field__label" for="EmploymentForm-college_name">College / University</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input class="field__input" type="text" id="EmploymentForm-college_years_completed" name="contact[college_years_completed]" placeholder="01 / 02 / 03 / 04">
+                    <label class="field__label" for="EmploymentForm-college_years_completed">Last Year Completed</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input class="field__input" type="text" id="EmploymentForm-college_degree" name="contact[college_degree]" placeholder="Degree">
+                    <label class="field__label" for="EmploymentForm-college_degree">Degree</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input class="field__input" type="text" id="EmploymentForm-college_major" name="contact[college_major]" placeholder="Major / Emphasis">
+                    <label class="field__label" for="EmploymentForm-college_major">Major / Emphasis</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input class="field__input" type="text" id="EmploymentForm-trade_school" name="contact[trade_school]" placeholder="Name / Location">
+                    <label class="field__label" for="EmploymentForm-trade_school">Trade School</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input class="field__input" type="text" id="EmploymentForm-trade_years_completed" name="contact[trade_years_completed]" placeholder="01 / 02 / 03 / 04">
+                    <label class="field__label" for="EmploymentForm-trade_years_completed">Last Year Completed</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input class="field__input" type="text" id="EmploymentForm-trade_degree" name="contact[trade_degree]" placeholder="Degree">
+                    <label class="field__label" for="EmploymentForm-trade_degree">Degree</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input class="field__input" type="text" id="EmploymentForm-trade_major" name="contact[trade_major]" placeholder="Major / Emphasis">
+                    <label class="field__label" for="EmploymentForm-trade_major">Major / Emphasis</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input class="field__input" type="text" id="EmploymentForm-other_education" name="contact[other_education]" placeholder="Name / Location">
+                    <label class="field__label" for="EmploymentForm-other_education">Other</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input class="field__input" type="text" id="EmploymentForm-other_years_completed" name="contact[other_years_completed]" placeholder="01 / 02 / 03 / 04">
+                    <label class="field__label" for="EmploymentForm-other_years_completed">Last Year Completed</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input class="field__input" type="text" id="EmploymentForm-other_degree" name="contact[other_degree]" placeholder="Degree">
+                    <label class="field__label" for="EmploymentForm-other_degree">Degree</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input class="field__input" type="text" id="EmploymentForm-other_major" name="contact[other_major]" placeholder="Major / Emphasis">
+                    <label class="field__label" for="EmploymentForm-other_major">Major / Emphasis</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div>
+                    <span style="color: #000000; font-size: 16px; font-weight: bold;">Professional References (first)</span>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input required="true" class="field__input" type="text" id="EmploymentForm-reference_name_1" name="contact[reference_name_1]" placeholder="Full Name">
+                    <label class="field__label" for="EmploymentForm-reference_name_1">Full Name</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input required="true" class="field__input" type="text" id="EmploymentForm-reference_location_1" name="contact[reference_location_1]" placeholder="City, State, ZIP">
+                    <label class="field__label" for="EmploymentForm-reference_location_1">Location</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input required="true" type="tel" id="EmploymentForm-reference_1_phone" class="field__input" name="contact[reference_1_phone]" pattern="[0-9\-]*" placeholder="Phone Number">
+                    <label class="field__label" for="EmploymentForm-reference_1_phone">Phone Number</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input required="true" class="field__input" type="text" id="EmploymentForm-reference_1_relation" name="contact[reference_1_relation]" placeholder="Relationship">
+                    <label class="field__label" for="EmploymentForm-reference_1_relation">Relationship</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div>
+                    <span style="color: #000000; font-size: 16px; font-weight: bold;">Professional References (second)</span>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input required="true" class="field__input" type="text" id="EmploymentForm-reference_name_2" name="contact[reference_name_2]" placeholder="Full Name">
+                    <label class="field__label" for="EmploymentForm-reference_name_2">Full Name</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input required="true" class="field__input" type="text" id="EmploymentForm-reference_location_2" name="contact[reference_location_2]" placeholder="City, State, ZIP">
+                    <label class="field__label" for="EmploymentForm-reference_location_2">Location</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input required="true" type="tel" id="EmploymentForm-reference_2_phone" class="field__input" name="contact[reference_2_phone]" pattern="[0-9\-]*" placeholder="Phone Number">
+                    <label class="field__label" for="EmploymentForm-reference_2_phone">Phone Number</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input required="true" class="field__input" type="text" id="EmploymentForm-reference_2_relation" name="contact[reference_2_relation]" placeholder="Relationship">
+                    <label class="field__label" for="EmploymentForm-reference_2_relation">Relationship</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div>
+                    <span style="color: #000000; font-size: 16px; font-weight: bold;">Professional References (third)</span>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input required="true" class="field__input" type="text" id="EmploymentForm-reference_name_3" name="contact[reference_name_3]" placeholder="Full Name">
+                    <label class="field__label" for="EmploymentForm-reference_name_3">Full Name</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input required="true" class="field__input" type="text" id="EmploymentForm-reference_3_location" name="contact[reference_3_location]" placeholder="City, State, ZIP">
+                    <label class="field__label" for="EmploymentForm-reference_3_location">Location</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input required="true" type="tel" id="EmploymentForm-reference_3_phone" class="field__input" name="contact[reference_3_phone]" pattern="[0-9\-]*" placeholder="Phone Number">
+                    <label class="field__label" for="EmploymentForm-reference_3_phone">Phone Number</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input required="true" class="field__input" type="text" id="EmploymentForm-reference_3_relation" name="contact[reference_3_relation]" placeholder="Relationship">
+                    <label class="field__label" for="EmploymentForm-reference_3_relation">Relationship</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div>
+                    <span style="color: #000000; font-size: 16px; font-weight: bold;">Additional Information</span>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <textarea
+                        rows="10"
+                        id="EmploymentForm-comments"
+                        class="text-area field__input"
+                        name="contact[comments]"
+                        placeholder="Is there anything else you would like us to know?"
+                    >
+                        {{- form.body -}}
+                    </textarea>
+                    <label class="form__label field__label" for="EmploymentForm-comments">Comments</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div>
+                    <span style="color: #000000; font-size: 16px; font-weight: bold;">Acceptance and Submission</span>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div>
+                    <div style="margin-bottom: 3rem;"><font color="black">Disclaimer: By electronically signing and submitting this application, I hereby certify that the above information, to the best of my knowledge, is correct. I understand that falsification of this information may prevent me from being hired or lead to my dismissal if hired. I also provide consent for former employers to be contacted regarding work records.</font></div>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input required="true" class="field__input" type="text" id="EmploymentForm-electronic_signature" name="contact[electronic_signature]" placeholder="First MI Last">
+                    <label class="field__label" for="EmploymentForm-electronic_signature">Electronic Signature</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <input required="true" class="field__input" type="date" id="EmploymentForm-date_signed" name="contact[date_signed]" placeholder="Today's Date">
+                    <label class="field__label" for="EmploymentForm-date_signed">Today's Date</label>
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="contact__button">
+                    <button type="submit" class="button">
+                        {{ 'templates.contact.form.send' | t }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+  {%- endform -%}
+</div>
+
+{% schema %}
+{
+  "name": "ES Employment App",
+  "tag": "section",
+  "class": "spaced-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Employment App",
+      "label": "Heading"
+    }
+  ],
+  "presets": [
+    {
+      "name": "ES Employment App"
+    }
+  ]
+}
+{% endschema %}

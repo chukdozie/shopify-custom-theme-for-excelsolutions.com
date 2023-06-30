@@ -1,0 +1,150 @@
+{{ 'section-contact-form.aio.min.css' | asset_url | stylesheet_tag }}
+
+<div class="contact page-width page-width--narrow spaced-section">
+  <h2 class="title">{{ section.settings.heading | escape }}</h2>
+  {%- form 'contact', id: 'QuoteForm' -%}
+    {%- if form.posted_successfully? -%}
+      <div class="form-status form-status-list form__message" tabindex="-1" autofocus>{% render 'icon-success' %} {{ 'templates.contact.form.post_success' | t }}</div>
+    {%- elsif form.errors -%}
+      <div class="form__message">
+        <h2 class="form-status caption-large" role="alert" tabindex="-1" autofocus>{% render 'icon-error' %} {{ 'templates.contact.form.error_heading' | t }}</h2>
+      </div>
+      <ul class="form-status-list caption-large" role="list">
+        <li>
+          <a href="#QuoteForm-email" class="link">
+            {{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}
+          </a>
+        </li>
+      </ul>
+    {%- endif -%}
+    <div class="qq-contact-row">
+        <div class="field-container">
+            <div class="field-container cfc-33">
+                <div class="field">
+                    <input required="true" class="field__input" type="text" id="QuoteForm-first_name" name="contact[first_name]" placeholder="First Name">
+                    <label class="field__label" for="QuoteForm-first_name">First Name</label>
+                </div>
+            </div>
+            <div class="field-container cfc-33">
+                <div class="field">
+                    <input required="true" class="field__input" type="text" id="QuoteForm-last_name" name="contact[last_name]" placeholder="Last Name">
+                    <label class="field__label" for="QuoteForm-last_name">Last Name</label>
+                </div>
+            </div>
+            <div class="field-container cfc-33">
+                <div class="field">
+                    <input required="true" class="field__input" type="text" id="QuoteForm-company" name="contact[company]" placeholder="Company">
+                    <label class="field__label" for="QuoteForm-company">Company</label>
+                </div>
+            </div>
+            <div class="field-container cfc-33">
+                <div class="field">
+                    <input required="true" class="field__input" type="text" id="QuoteForm-street" name="contact[street]" placeholder="Street">
+                    <label class="field__label" for="QuoteForm-street">Street Address</label>
+                </div>
+            </div>
+            <div class="field-container cfc-25">
+                <div class="field">
+                    <input required="true" class="field__input" type="text" id="QuoteForm-city" name="contact[city]" placeholder="City">
+                    <label class="field__label" for="QuoteForm-city">City</label>
+                </div>
+            </div>
+            <div class="field-container cfc-16">
+                <div class="field">
+                    <input required="true" class="field__input" type="text" id="QuoteForm-state" name="contact[state]" placeholder="State">
+                    <label class="field__label" for="QuoteForm-state">State</label>
+                </div>
+            </div>
+            <div class="field-container cfc-25">
+                <div class="field">
+                    <input required="true" class="field__input" type="text" id="QuoteForm-zip" name="contact[zip]" placeholder="ZIP">
+                    <label class="field__label" for="QuoteForm-zip">ZIP</label>
+                </div>
+            </div>
+            <div class="field-container cfc-50">
+                <div class="field">
+                    <input required="true" type="tel" id="QuoteForm-phone" class="field__input" autocomplete="tel" name="contact[{{ 'templates.contact.form.phone' | t }}]" pattern="[0-9\-]*" value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}" placeholder="{{ 'templates.contact.form.phone' | t }}">
+                    <label class="field__label" for="QuoteForm-phone">{{ 'templates.contact.form.phone' | t }}</label>
+                </div>
+            </div>
+            <div class="field-container cfc-50">
+                <div class="field field--with-error">
+                    <input
+                        autocomplete="email"
+                        type="email"
+                        id="QuoteForm-email"
+                        class="field__input"
+                        name="contact[email]"
+                        spellcheck="false"
+                        autocapitalize="off"
+                        value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+                        aria-required="true"
+                        {% if form.errors contains 'email' %}
+                            aria-invalid="true"
+                            aria-describedby="QuoteForm-email-error"
+                        {% endif %}
+                        placeholder="{{ 'templates.contact.form.email' | t }}"
+                    >
+                    <label class="field__label" for="QuoteForm-email">{{ 'templates.contact.form.email' | t }} <span aria-hidden="true">*</span></label>
+                    {%- if form.errors contains 'email' -%}
+                        <small class="contact__field-error" id="QuoteForm-email-error">
+                            <span class="visually-hidden">{{ 'accessibility.error' | t }}</span>
+                            <span class="form__message">{% render 'icon-error' %}{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}</span>
+                        </small>
+                    {%- endif -%}
+                </div>
+            </div>
+            <div class="field-container cfc-100">
+                <div class="field">
+                    <textarea
+                        rows="10"
+                        id="QuoteForm-products_requested"
+                        class="text-area field__input"
+                        name="contact[products_requested]"
+                        placeholder="Services or Products Requested"
+                        required="true" 
+                    >
+                        {{- form.body -}}
+                    </textarea>
+                    <label class="form__label field__label" for="QuoteForm-products_requested">Services or Products Requested</label>
+                </div>
+            </div>
+            <div class="field-container cfc-50">
+                <div class="literature">
+                    <label style="margin-right: 1.5rem; align-self: center;" for="send_literature">Send Literature</label>
+                    <input style="margin: 3px 3px 3px 5px;" type="radio" name="contact[send_literature]" value="Yes" id="QuoteForm-yes"><label style="margin: 0 1.5rem 0 0.3rem; align-self: center;" for="QuoteForm-yes">Yes</label><br>
+                    <input style="margin: 3px 3px 3px 5px;" type="radio" name="contact[send_literature]" value="No" id="QuoteForm-no"><label style="margin: 0 0 0 0.3rem; align-self: center;" for="QuoteForm-no">No</label><br>
+                </div>
+            </div>
+            <div class="field-container cfc-50">
+                <div class="contact__button">
+                    <button type="submit" class="button">
+                        {{ 'templates.contact.form.send' | t }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+  {%- endform -%}
+</div>
+
+{% schema %}
+{
+  "name": "Quick Quote",
+  "tag": "section",
+  "class": "spaced-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Quick Quote",
+      "label": "Heading"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Quick Quote"
+    }
+  ]
+}
+{% endschema %}

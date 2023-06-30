@@ -1,0 +1,474 @@
+<link rel="stylesheet" href="{{ 'component-list-menu.aio.min.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-search.aio.min.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-menu-drawer.aio.min.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-cart-notification.aio.min.css' | asset_url }}" media="print" onload="this.media='all'">
+
+<noscript>{{ 'component-list-menu.aio.min.css' | asset_url | stylesheet_tag }}</noscript>
+<noscript>{{ 'component-search.aio.min.css' | asset_url | stylesheet_tag }}</noscript>
+<noscript>{{ 'component-menu-drawer.aio.min.css' | asset_url | stylesheet_tag }}</noscript>
+<noscript>{{ 'component-cart-notification.aio.min.css' | asset_url | stylesheet_tag }}</noscript>
+
+<style>
+  header-drawer {
+    justify-self: start;
+    margin-left: -1.2rem;
+  }
+
+  @media screen and (min-width: 1000px) {
+    header-drawer {
+      display: none;
+    }
+
+    .es-header {
+      padding: 2rem 4rem 4.1rem;
+    }
+  }
+
+  @media screen and (max-width: 999px) {
+    h1.header__heading {
+      grid-area: left-icon;
+    }
+
+    header-drawer {
+      grid-area: icons;
+      margin-left: auto;
+    }
+  }
+
+  .es-header {
+    min-height: 74px;
+  }
+
+  .menu-drawer-container {
+    display: flex;
+  }
+
+  .list-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .list-menu--inline {
+    display: inline-flex;
+    flex-wrap: wrap;
+  }
+
+  summary.list-menu__item {
+    padding-right: 2.7rem;
+  }
+
+  .list-menu__item {
+    display: flex;
+    align-items: center;
+    line-height: 1.3;
+  }
+
+  .list-menu__item--link {
+    text-decoration: none;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+    line-height: 1.8;
+  }
+
+  @media screen and (min-width: 1000px) {
+    .list-menu__item--link {
+      padding-bottom: 0.5rem;
+      padding-top: 0.5rem;
+    }
+    .topnav {
+      display: none;
+    }
+  }
+
+  @media screen and (max-width: 999px) {
+    .es-header{
+      display:none;
+    }
+    .es-header {
+      border-bottom: 2px solid #fcb900;
+    }
+    .menu-drawer-container{
+      background: #1d3961;
+    }
+    .small-hide-nav {
+      display: none;
+    }
+  }
+  ul#predictive-search-results-list {
+  	list-style: none;
+  }
+  
+  div.desktop-menu-items {
+    display: flex;
+    align-items: center;
+    margin-left: 4rem;
+  }
+
+  .desktop-menu-items .cart-icon {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  
+  .desktop-menu-items .cart-icon svg {
+    width: 2.4rem;
+  }
+  
+  .desktop-menu-items .cart-icon svg path {
+    fill: #fff !important;
+  }
+  
+  
+  .desktop-menu-items .account-icon {
+    margin-left: 3rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .desktop-menu-items .cart-mobile-bubble {
+    border-width: 0;
+    max-width: 36px;
+    overflow: hidden;
+    position: absolute;
+    left: 20px;
+    text-overflow: ellipsis;
+    top: -7px;
+    white-space: nowrap;
+    align-items: center;
+    background: #cd2215;
+    border-color: #fff;
+    border-radius: 40px;
+    border-style: solid;
+    box-shadow: 0 0 4px rgb(0 0 0 / 40%);
+    color: #fff;
+    display: flex;
+    font-size: 12px;
+    line-height: 1;
+    font-weight: 700;
+    height: 19px;
+    justify-content: center;
+    min-width: 19px;
+    text-align: center;
+    padding: 0 3px;
+  }
+
+  #cart-icon-bubble > div {
+    display: flex;
+    align-items: center;
+  }
+</style>
+ 
+<script src="{{ 'details-disclosure.aio.min.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'details-modal.aio.min.js' | asset_url }}" defer="defer"></script>
+
+<svg xmlns="http://www.w3.org/2000/svg" class="hidden">
+  <symbol id="icon-search" viewbox="0 0 18 19" fill="none">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M11.03 11.68A5.784 5.784 0 112.85 3.5a5.784 5.784 0 018.18 8.18zm.26 1.12a6.78 6.78 0 11.72-.7l5.4 5.4a.5.5 0 11-.71.7l-5.41-5.4z" fill="currentColor"/>
+  </symbol>
+
+  <symbol id="icon-close" class="icon icon-close" fill="none" viewBox="0 0 18 17">
+    <path d="M.865 15.978a.5.5 0 00.707.707l7.433-7.431 7.579 7.282a.501.501 0 00.846-.37.5.5 0 00-.153-.351L9.712 8.546l7.417-7.416a.5.5 0 10-.707-.708L8.991 7.853 1.413.573a.5.5 0 10-.693.72l7.563 7.268-7.418 7.417z" fill="currentColor">
+  </symbol>
+</svg>
+  
+{% render 'mobile_menu' %}
+  
+<{% if section.settings.enable_sticky_header %}sticky-header{% else %}div{% endif %} class="header-wrapper{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}">
+  <header>
+    <div class="es-header header header--{{ section.settings.logo_position }} page-width{% if section.settings.menu != blank %} header--has-menu{% endif %}" data-id="es-header">
+      {%- if section.settings.logo_position == 'top-center' or section.settings.menu == blank -%}
+        <details-modal class="header__search">
+          <details>
+            <summary class="header__icon header__icon--search header__icon--summary link link--text focus-inset modal__toggle" aria-haspopup="dialog" aria-label="{{ 'general.search.search' | t }}">
+              <span>
+                <svg class="modal__toggle-open icon icon-search" aria-hidden="true" focusable="false" role="presentation">
+                  <use href="#icon-search">
+                </svg>
+                <svg class="modal__toggle-close icon icon-close" aria-hidden="true" focusable="false" role="presentation">
+                  <use href="#icon-close">
+                </svg>
+              </span>
+            </summary>
+            <div class="search-modal modal__content" role="dialog" aria-modal="true" aria-label="{{ 'general.search.search' | t }}">
+              <div class="search-modal__content" tabindex="-1">
+                <form action="{{ routes.search_url }}" method="get" role="search" class="search search-modal__form">
+                  <div class="field">
+                    <input class="search__input field__input" id="Search-In-Modal" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.search' | t }}">
+                    <label class="field__label" for="Search-In-Modal">{{ 'general.search.search' | t }}</label>
+                    <input type="hidden" name="options[prefix]" value="last">
+                    <button class="search__button field__button" aria-label="{{ 'general.search.search' | t }}">
+                      <svg class="icon icon-search" aria-hidden="true" focusable="false" role="presentation">
+                        <use href="#icon-search">
+                      </svg>
+                    </button>
+                  </div>
+                </form>
+                <button type="button" class="modal__close-button link link--text focus-inset" aria-label="{{ 'accessibility.close' | t }}">
+                  <svg class="icon icon-close" aria-hidden="true" focusable="false" role="presentation">
+                    <use href="#icon-close">
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </details>
+        </details-modal>
+      {%- endif -%}
+
+      {%- if request.page_type == 'index' -%}
+        <h1 class="header__heading">
+      {%- endif -%}
+          <a href="https://www.excelsolutions.com/" class="header__heading-link link link--text focus-inset">
+            {%- if section.settings.logo != blank -%}
+              {%- assign image_size = section.settings.logo_width | append: 'x' -%}
+              <img srcset="{{ section.settings.logo | img_url: image_size }} 1x, {{ section.settings.logo | img_url: image_size, scale: 2 }} 2x"
+                src="{{ section.settings.logo | img_url: image_size }}"
+                loading="lazy"
+                class="header__heading-logo"
+                width="{{ section.settings.logo.width }}"
+                height="{{ section.settings.logo.height }}"
+                alt="{{ section.settings.logo.alt | default: shop.name | escape }}"
+              >
+            {%- else -%}
+              <span class="h2" style="padding-bottom: 20px;">{{ shop.name }}</span>
+            {%- endif -%}
+          </a>
+      {%- if request.page_type == 'index' -%}
+        </h1>
+      {%- endif -%}
+
+      <div style="grid-area: navigation; text-align: right;" class="small-hide">
+        <div style="display: inline-flex; align-items: center; margin-right: 5.5rem;">
+          <div style="display: flex;">
+            {% render 'icon-map-marker' %}
+          </div>
+          <div style="display: inline-flex; color: white; font-size: 13px; line-height: 17px; padding: 0 1rem 0 1.5rem; text-align: left;">
+            <p>315 Ken Mar Ind Pkwy<br>Cleveland, OH 44147</p> 
+          </div>
+        </div>
+        <div style="display: inline-flex; align-items: center;">
+          <div style="display: flex;">
+            {% render 'icon-phone' %}
+          </div>
+          <div style="display: inline-flex; color: white; font-size: 13px; line-height: 17px; padding: 0 1rem 0 2rem; text-align: left;">
+            <p>Questions? Call today!<br>Toll Free (855) 951-4499</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="es-header-cart" data-id="{{ section.id }}" class="desktop-menu-items">
+        <div class="cart-icon" id="cart-btn">
+          <div class="js-contents">
+            <a style="padding: 0;" href="/cart" id="cart-icon-bubble">
+              <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
+              <div style="height: 31px; width: 31px;">
+                {% render 'icon-shopping-cart' %}
+              </div>
+              {%- if cart != empty -%}
+                <div id="cart-count-bubble" class="cart-mobile-bubble">
+                    {%- if cart.item_count < 100 -%}
+                      <span id="cart-count-bubble-number" aria-hidden="true">{{ cart.item_count }}</span>
+                    {%- endif -%}
+                    <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
+                </div>
+              {%- endif -%}
+            </a>
+          </div>
+        </div>
+        <a href="/account" class="account-icon">
+          {% render 'icon-user' %}
+        </a>
+      </div>
+    </div>
+    {% render 'es-link-list' %}
+  </header>
+
+</{% if section.settings.enable_sticky_header %}sticky-header{% else %}div{% endif %}>
+
+{%- if request.page_type != 'cart' -%}
+  {%- render 'cart-notification' -%}
+{%- endif -%}
+
+{% javascript %}
+  class StickyHeader extends HTMLElement {
+    constructor() {
+      super();
+    }
+
+    connectedCallback() {
+      this.header = document.getElementById('shopify-section-header');
+      this.headerBounds = {};
+      this.currentScrollTop = 0;
+
+      this.onScrollHandler = this.onScroll.bind(this);
+
+      window.addEventListener('scroll', this.onScrollHandler, false);
+
+      this.createObserver();
+    }
+
+    disconnectedCallback() {
+      window.removeEventListener('scroll', this.onScrollHandler);
+    }
+
+    createObserver() {
+      let observer = new IntersectionObserver((entries, observer) => {
+        this.headerBounds = entries[0].intersectionRect;
+        observer.disconnect();
+      });
+
+      observer.observe(this.header);
+    }
+
+    onScroll() {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+      if (scrollTop > this.currentScrollTop && scrollTop > this.headerBounds.bottom) {
+        requestAnimationFrame(this.hide.bind(this));
+      } else if (scrollTop < this.currentScrollTop && scrollTop > this.headerBounds.bottom) {
+        requestAnimationFrame(this.reveal.bind(this));
+      } else if (scrollTop <= this.headerBounds.top) {
+        requestAnimationFrame(this.reset.bind(this));
+      }
+
+      this.currentScrollTop = scrollTop;
+    }
+
+    hide() {
+      this.header.classList.add('shopify-section-header-hidden', 'shopify-section-header-sticky');
+      this.closeMenuDisclosure();
+      this.closeSearchModal();
+    }
+
+    reveal() {
+      this.header.classList.add('shopify-section-header-sticky', 'animate');
+      this.header.classList.remove('shopify-section-header-hidden');
+    }
+
+    reset() {
+      this.header.classList.remove('shopify-section-header-hidden', 'shopify-section-header-sticky', 'animate');
+    }
+
+    closeMenuDisclosure() {
+      this.disclosures = this.disclosures || this.header.querySelectorAll('details-disclosure');
+      this.disclosures.forEach(disclosure => disclosure.close());
+    }
+
+    closeSearchModal() {
+      this.searchModal = this.searchModal || this.header.querySelector('details-modal');
+      this.searchModal.close(false);
+    }
+  }
+
+  customElements.define('sticky-header', StickyHeader);
+
+{% endjavascript %}
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Organization",
+    "name": {{ shop.name | json }},
+    {% if section.settings.logo %}
+      {% assign image_size = section.settings.logo.width | append: 'x' %}
+      "logo": {{ section.settings.logo | img_url: image_size | prepend: "https:" | json }},
+    {% endif %}
+    "sameAs": [
+      {{ settings.social_twitter_link | json }},
+      {{ settings.social_facebook_link | json }},
+      {{ settings.social_linkedin_link | json }},
+      {{ settings.social_instagram_link | json }},
+      {{ settings.social_tumblr_link | json }},
+      {{ settings.social_snapchat_link | json }},
+      {{ settings.social_youtube_link | json }},
+      {{ settings.social_vimeo_link | json }}
+    ],
+    "url": {{ shop.url | append: page.url | json }}
+  }
+</script>
+
+{%- if request.page_type == 'index' -%}
+  {% assign potential_action_target = shop.url | append: routes.search_url | append: "?q={search_term_string}" %}
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "WebSite",
+      "name": {{ shop.name | json }},
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {{ potential_action_target | json }},
+        "query-input": "required name=search_term_string"
+      },
+      "url": {{ shop.url | append: page.url | json }}
+    }
+  </script>
+{%- endif -%}
+
+<script src="{{ 'cart-notification.aio.min.js' | asset_url }}" defer="defer"></script>
+{% schema %}
+{
+  "name": "t:sections.header.name",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "t:sections.header.settings.logo.label"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 100,
+      "max": 200,
+      "step": 5,
+      "default": 115,
+      "unit": "t:sections.header.settings.logo_width.unit",
+      "label": "t:sections.header.settings.logo_width.label"
+    },
+    {
+      "type": "select",
+      "id": "logo_position",
+      "options": [
+        {
+          "value": "middle-left",
+          "label": "t:sections.header.settings.logo_position.options__1.label"
+        },
+        {
+          "value": "top-left",
+          "label": "t:sections.header.settings.logo_position.options__2.label"
+        },
+        {
+          "value": "top-center",
+          "label": "t:sections.header.settings.logo_position.options__3.label"
+        }
+      ],
+      "default": "middle-left",
+      "label": "t:sections.header.settings.logo_position.label"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "default": "main-menu",
+      "label": "t:sections.header.settings.menu.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_line_separator",
+      "default": true,
+      "label": "t:sections.header.settings.show_line_separator.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sticky_header",
+      "default": true,
+      "label": "t:sections.header.settings.enable_sticky_header.label",
+      "info": "t:sections.header.settings.enable_sticky_header.info"
+    },
+    {
+      "type": "font_picker",
+      "id": "nav_font",
+      "label": "Font for navigation items",
+      "default": "rubik_n7"
+    }
+  ]
+}
+{% endschema %}
