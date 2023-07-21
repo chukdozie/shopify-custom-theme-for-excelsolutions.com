@@ -13,6 +13,7 @@
   padding: 0;
   background-color: #1d3961;
   color: white;
+  max-width: 120rem;
 }
 
 .es-navs {
@@ -34,8 +35,8 @@ div.es-navs ul {
   font-family: 'Rubik', sans-serif;
   font-size: 13px;
   font-weight: 800;
-  padding: 16px 21px;
-  height: 48px;
+  padding: 17px 21px;
+  height: 50px;
 }
 
 .es-navs ul a:hover {
@@ -128,7 +129,7 @@ ul.es-submenu li a:first-child:nth-last-child(2):before {
  }
 </style>
 
-<nav style="position: absolute;margin-top: -2.5rem; padding: 0; width: 100%;" class="small-hide-nav" role="navigation">
+<nav style="position: absolute;margin-top: -2.5rem; padding: 0; width: 100%; background-color: #1d3961;" class="small-hide-nav" role="navigation">
   <div class="es-bar es-bar-grid">
     <div class="es-navs">
       <ul role="list">
@@ -190,7 +191,14 @@ ul.es-submenu li a:first-child:nth-last-child(2):before {
         {%- endfor -%}
       </ul>
     </div>
-    {% render 'es-link-search' %}
+    <div style="display: inline-flex; align-items: center; justify-content: flex-end; padding-right: 4rem;">
+      <div style="display: flex;">
+        {% render 'icon-phone' %}
+      </div>
+      <div style="display: inline-flex; color: white; font-size: 15px; line-height: 17px; padding: 0 0 0 1.5rem; text-align: left; font-weight: 800;">
+        <p>Toll-Free (855) 951-4499</p>
+      </div>
+    </div>
   </div>
 </nav>
 
@@ -199,7 +207,8 @@ div.es-navs ul li:hover ul.mega-menu{
   display: flex;
   width: 100%;
   position: fixed;
-  left: 0;
+  max-width: 1120px;
+  left: calc((100% - 1120px)/2);
 }
 
 div.es-navs ul li:hover ul.mega-menu li{
@@ -210,7 +219,7 @@ ul.es-submenu.mega-menu li a:first-child:nth-last-child(2):before{
   display: none;
 }
 
-ul.mega-menu li a:before{
+a.header__menu-item.list-menu__item.link.link--text.focus-inset.caption-large:after {
     content: '';
     position: absolute;
     right: 50px;
